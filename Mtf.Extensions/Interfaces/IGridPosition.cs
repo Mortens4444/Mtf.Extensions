@@ -1,4 +1,4 @@
-﻿namespace Mtf.Windows.Forms.Extensions.Interfaces
+﻿namespace Mtf.Interfaces
 {
     public class IGridPosition
     {

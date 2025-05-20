@@ -1,4 +1,4 @@
-﻿using Mtf.Windows.Forms.Extensions.Interfaces;
+﻿using Mtf.Interfaces;
 using System.Windows.Forms;
 
 namespace Mtf.Extensions
