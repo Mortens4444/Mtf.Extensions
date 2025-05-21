@@ -16,7 +16,9 @@ namespace Mtf.Extensions
 
         public static void Swap(ref double a, ref double b)
         {
-            (b, a) = (a, b);
+            var temp = a;
+            a = b;
+            b = temp;
         }
 
         public static int RoundToInt(this double value)

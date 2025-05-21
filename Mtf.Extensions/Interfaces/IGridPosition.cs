@@ -1,13 +1,13 @@
-﻿namespace Mtf.Interfaces
+﻿namespace Mtf.Extensions.Interfaces
 {
-    public class IGridPosition
+    public interface IGridPosition
     {
-        public int Column { get; internal set; }
+        int Column { get; }
 
-        public int Row { get; internal set; }
+        int Row { get; }
 
-        public int ColumnSpan { get; internal set; }
+        int ColumnSpan { get; }
 
-        public int RowSpan { get; internal set; }
+        int RowSpan { get; }
     }
 }

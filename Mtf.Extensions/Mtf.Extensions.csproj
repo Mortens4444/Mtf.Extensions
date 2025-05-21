@@ -1,20 +1,76 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net462</TargetFrameworks>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <OutputType>Library</OutputType>
     <AnalysisLevel>latest-all</AnalysisLevel>
-    <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
-    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <WarningLevel>9999</WarningLevel>
-    <DebugType>full</DebugType>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <DebugType>portable</DebugType>
+    <IncludeSymbols>true</IncludeSymbols>
+    <IncludeSource>true</IncludeSource>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <EmbedAllSources>true</EmbedAllSources>
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <Version>1.0.8</Version>
+    <AssemblyVersion>$(Version)</AssemblyVersion>
+    <FileVersion>$(Version)</FileVersion>
+    <InformationalVersion>$(Version)</InformationalVersion>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <PackageId>$(ProjectName)</PackageId>
+    <Authors>Mortens</Authors>
+    <Company>Mortens</Company>
+    <Description>
+The library includes various extension classes, such as:
+  - BrushExtensions
+  - ByteArrayExtensions
+  - ByteExtensions
+  - CharExtensions
+  - ColorExtensions
+  - DateTimeExtensions
+  - DictionaryExtension
+  - DoubleExtensions
+  - EndPointExtensions
+  - EnumExtensions
+  - ExceptionExtensions
+  - GenericExtensions
+  - Int64Extensions
+  - IntExtensions
+  - MathExtensions
+  - ObjectArrayExtensions
+  - ObjectExtensions
+  - RectangleExtensions
+  - SocketExtensions
+  - StringExtensions
+  - TaskExtensions
+  - TypeExtensions
+  - UInt16Extensions
+  - XmlDocumentExtensions
+  - ZipFileExtensions
+    </Description>
+    <PackageReadmeFile>.\ReadMe.md</PackageReadmeFile>
+    <PackageLicenseFile>.\LICENSE.txt</PackageLicenseFile>
+    <RepositoryUrl>https://github.com/Mortens4444/Mtf.Extensions.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+	<PackageTags>BrushExtensions ByteArrayExtensions ByteExtensions CharExtensions ColorExtensions DateTimeExtensions DictionaryExtension  DoubleExtensions EndPointExtensions EnumExtensions ExceptionExtensions GenericExtensions Int64Extensions IntExtensions MathExtensions ObjectArrayExtensions ObjectExtensions RectangleExtensions SocketExtensions StringExtensions TaskExtensions TypeExtensions UInt16Extensions XmlDocumentExtensions ZipFileExtensions Mortens</PackageTags>
+  </PropertyGroup>
   <ItemGroup>
+    <None Include="..\ReadMe.md" Pack="true" PackagePath="" />
+    <None Include="..\LICENSE.txt" Pack="true" PackagePath="" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
     <PackageReference Include="System.Drawing.Common" Version="9.0.5" />
+    <PackageReference Include="System.IO.Compression" Version="4.3.0" />
   </ItemGroup>
 
 </Project>

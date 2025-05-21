@@ -1,4 +1,4 @@
-﻿namespace Mtf.Interfaces
+﻿namespace Mtf.Extensions.Interfaces
 {
     public interface IHaveIdWithSetter<TIdType>
         where TIdType : struct

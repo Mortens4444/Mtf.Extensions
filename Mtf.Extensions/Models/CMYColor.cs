@@ -23,10 +23,10 @@ namespace Mtf.Extensions.Models
             B = color.B;
             Color = color;
 
-            var (c, m, y) = RgbToCmy(color);
-            C = (int)Math.Round(c);
-            M = (int)Math.Round(m);
-            Y = (int)Math.Round(y);
+            var tuple = RgbToCmy(color);
+            C = (int)Math.Round(tuple.Item1);
+            M = (int)Math.Round(tuple.Item2);
+            Y = (int)Math.Round(tuple.Item3);
         }
 
         public CMYColor(double C, double M, double Y)
@@ -47,7 +47,7 @@ namespace Mtf.Extensions.Models
             return $"RGB = ({R}, {G}, {B}); CMY = ({C}, {M}, {Y})";
         }
 
-        public static (double C, double M, double Y) RgbToCmy(Color rgbColor)
+        public static Tuple<double, double, double> RgbToCmy(Color rgbColor)
         {
             var r = rgbColor.R / 255.0;
             var g = rgbColor.G / 255.0;
@@ -57,7 +57,7 @@ namespace Mtf.Extensions.Models
             var m = 1 - g;
             var y = 1 - b;
 
-            return (c, m, y);
+            return new Tuple<double, double, double>(c, m, y);
         }
 
         public static Color CmyToRgb(double c, double m, double y)
