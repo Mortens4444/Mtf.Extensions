@@ -1009,7 +1009,7 @@ namespace Mtf.Extensions
             var result = new StringBuilder();
             for (var i = 0; i < value.Length; i++)
             {
-                _ = result.Append(value[i].CharToHexaRepresentation());
+                _ = result.Append(value[i].CharToHexRepresentation());
             }
 
             return result.ToString();
