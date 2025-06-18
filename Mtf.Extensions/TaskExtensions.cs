@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,6 +17,7 @@ namespace Mtf.Extensions
                     foreach (var exception in aggregateException.InnerExceptions)
                     {
                         Debug.WriteLine(exception);
+                        Console.Error.WriteLine(exception);
                     }
                 }
             }, CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.Default);
@@ -31,6 +33,7 @@ namespace Mtf.Extensions
                     foreach (var exception in aggregateException.InnerExceptions)
                     {
                         Debug.WriteLine(exception);
+                        Console.Error.WriteLine(exception);
                     }
                 }
                 return t.Result;

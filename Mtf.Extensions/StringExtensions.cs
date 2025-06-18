@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System;
-using System.Security;
+﻿using Mtf.Extensions.Exceptions;
 using Mtf.Extensions.Services;
+using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
-using System.Text.RegularExpressions;
+using System.Security;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Mtf.Extensions
 {
@@ -15,6 +15,7 @@ namespace Mtf.Extensions
         private static readonly Regex UppercaseCharacters = new Regex("(?<!^)(?=[A-Z])", RegexOptions.Compiled);
         private static readonly string[] separator = new[] { "\r\n", "\r" };
         private static readonly string[] separatorArray = new[] { "\r\n\r\n" };
+        private static readonly char[] ipAndPortSeparators = new char[] { ':', ' ' };
 
         public static int NumberOfOccurrences(this string source, string word)
         {
@@ -102,7 +103,6 @@ namespace Mtf.Extensions
             return Convert.ToByte(binary, 2);
         }
 
-
         public static string ConvertTextToBinary(this string value)
         {
             if (String.IsNullOrEmpty(value))
@@ -118,7 +118,7 @@ namespace Mtf.Extensions
             return sb.ToString();
         }
 
-        public static string ConvertHexaToText(this string value)
+        public static string ConvertHexToText(this string value)
         {
             if (String.IsNullOrEmpty(value))
             {
@@ -144,7 +144,7 @@ namespace Mtf.Extensions
             return sb.ToString();
         }
 
-        public static string ConvertTextToHexa(this string value)
+        public static string ConvertTextToHex(this string value)
         {
             if (String.IsNullOrEmpty(value))
             {
@@ -1169,5 +1169,56 @@ namespace Mtf.Extensions
                 throw;
             }
         }
+
+        public static string GetIpAddressFromEndPoint(this string text)
+        {
+            if (String.IsNullOrWhiteSpace(text))
+            {
+                return String.Empty;
+            }
+            return text.Split(':')[0];
+        }
+
+        public static Tuple<string, ushort> GetIpAddressAndPortFromEndPoint(this string text)
+        {
+            if (String.IsNullOrWhiteSpace(text))
+            {
+                return new Tuple<string, ushort>(String.Empty, 0);
+            }
+            var parts = text.Split(ipAndPortSeparators);
+            if (UInt16.TryParse(parts[1], out var port))
+            {
+                return new Tuple<string, ushort>(parts[0], port);
+            }
+            throw new LocalizedException("Port value cannot be parsed from value: {0}.", text);
+        }
+
+        public static ushort GetPortFromEndPoint(this string text)
+        {
+            if (String.IsNullOrWhiteSpace(text))
+            {
+                return 0;
+            }
+            if (UInt16.TryParse(text.Split(ipAndPortSeparators)[1], out var port))
+            {
+                return port;
+            }
+            throw new LocalizedException("Port value cannot be parsed from value: {0}.", text);
+        }
+
+        public static Tuple<string, string> GetVideoSourceInfo(this string text)
+        {
+            if (String.IsNullOrWhiteSpace(text))
+            {
+                return new Tuple<string, string>(String.Empty, String.Empty);
+            }
+            var info = text.Split('|');
+            if (info.Length == 2)
+            {
+                return new Tuple<string, string>(info[0], info[1]);
+            }
+            throw new LocalizedException("Video source info cannot be parsed from value: {0}.", text);
+        }
+
     }
 }

@@ -14,7 +14,6 @@ namespace Mtf.Extensions
 
         public static char GenerateCharByHungarianStatistics()
         {
-
             double total = HunCharacterStatisticsValues.Sum();
             double d = RandomProvider.GetSecureRandomProbability();
             double sum = 0;
@@ -211,13 +210,13 @@ namespace Mtf.Extensions
         // $D000 - $D3FF - Uppercase/graphics charset
         // $D400 - $D7FF - Lowercase/uppercase charset
 
+        // 0 0 0 0 0 0 0 0					00
+        // 0 0 0 0 0 0 0 0					00
         // 0 0 1 1 1 1 0 0		  0000		3C
         // 0 1 1 0 0 1 1 0		 00  00		66
-        // 0 1 1 0 1 1 1 0		 00 000		6E
-        // 0 1 1 0 1 1 1 0		 00 000		6E
+        // 0 1 1 1 1 1 1 0		 000000		7E
         // 0 1 1 0 0 0 0 0		 00			60
         // 0 1 1 0 0 0 1 0		 00   0		62
-        // 0 1 1 1 1 1 0 0		  0000		3C
-        // 0 0 0 0 0 0 0 0					00
+        // 0 0 1 1 1 1 0 0		  0000		3C
     }
 }
