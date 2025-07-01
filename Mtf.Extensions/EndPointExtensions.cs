@@ -26,7 +26,7 @@ namespace Mtf.Extensions
             return endpointText;
         }
 
-        public static Tuple<string, ushort> GetEndPointInfo(this EndPoint endpoint)
+        public static Tuple<string, ushort> GetIpAddressAndPort(this EndPoint endpoint)
         {
             var endpointText = endpoint?.ToString();
             if (String.IsNullOrEmpty(endpointText))
@@ -38,7 +38,7 @@ namespace Mtf.Extensions
             return new Tuple<string, ushort>(ipAndPort[0], Convert.ToUInt16(ipAndPort[1], CultureInfo.InvariantCulture));
         }
 
-        public static string GetEndPointIpAddress(this EndPoint endpoint)
+        public static string GetIpAddress(this EndPoint endpoint)
         {
             var endpointText = endpoint?.ToString();
             if (String.IsNullOrEmpty(endpointText))
@@ -50,7 +50,7 @@ namespace Mtf.Extensions
             return ipAndPort[0];
         }
 
-        public static ushort GetEndPointPort(this EndPoint endpoint)
+        public static ushort GetPort(this EndPoint endpoint)
         {
             var endpointText = endpoint?.ToString();
             if (String.IsNullOrEmpty(endpointText))
