@@ -15,7 +15,7 @@ namespace Mtf.Extensions.Services
             }
 
             var range = Subtract(max, min);
-            var limit = ulong.MaxValue - (ulong.MaxValue % Convert.ToUInt64(range, System.Globalization.CultureInfo.InvariantCulture));
+            var limit = ulong.MaxValue - (ulong.MaxValue % Convert.ToUInt64(range, CultureInfo.InvariantCulture));
 
             ulong result;
             do
@@ -24,7 +24,7 @@ namespace Mtf.Extensions.Services
             }
             while (result >= limit);
 
-            var value = (result % Convert.ToUInt64(range, CultureInfo.InvariantCulture)) + Convert.ToUInt64(min, System.Globalization.CultureInfo.InvariantCulture);
+            var value = (result % Convert.ToUInt64(range, CultureInfo.InvariantCulture)) + Convert.ToUInt64(min, CultureInfo.InvariantCulture);
             return (T)Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture);
         }
 
