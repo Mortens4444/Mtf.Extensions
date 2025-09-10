@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -63,6 +64,26 @@ namespace Mtf.Windows.Forms.Extensions
         public static void ClearImage(this PictureBox pictureBox)
         {
             pictureBox.SetImage(null);
+        }
+
+        public static void LoadImage(this PictureBox pictureBox, string path)
+        {
+            if (pictureBox == null)
+            {
+                throw new ArgumentNullException(nameof(pictureBox));
+            }
+
+            if (File.Exists(path))
+            {
+                try
+                {
+                    using (var sourceImage = Image.FromFile(path))
+                    {
+                        pictureBox.Image = (Bitmap)sourceImage.Clone();
+                    }
+                }
+                catch { }
+            }
         }
     }
 }

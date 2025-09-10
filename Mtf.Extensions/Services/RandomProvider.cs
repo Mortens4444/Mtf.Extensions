@@ -1,66 +1,50 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Security.Cryptography;
 
 namespace Mtf.Extensions.Services
 {
     public static class RandomProvider
     {
-        public static byte GetSecureRandomByte()
+        public static T GetSecureRandom<T>(T min, T max) where T : struct, IComparable<T>
         {
-            return GetRandomBytes(1)[0];
-        }
-
-        public static int GetSecureRandomInt()
-        {
-            return BitConverter.ToInt32(GetRandomBytes(4), 0);
-        }
-
-        public static uint GetSecureRandomUInt()
-        {
-            return BitConverter.ToUInt32(GetRandomBytes(4), 0);
-        }
-
-        public static byte GetSecureRandomUByteInt(byte min, byte max)
-        {
-            if (min >= max)
+            if (Comparer<T>.Default.Compare(min, max) >= 0)
             {
                 throw new ArgumentException("min must be less than max");
             }
 
-            var range = max - min;
-            var limit = Byte.MaxValue - (Byte.MaxValue % range);
-            byte result;
+            var range = Subtract(max, min);
+            var limit = ulong.MaxValue - (ulong.MaxValue % Convert.ToUInt64(range, System.Globalization.CultureInfo.InvariantCulture));
+
+            ulong result;
             do
             {
-                result = GetRandomBytes(1)[0];
+                result = GetRandomUInt64(typeof(T));
             }
             while (result >= limit);
 
-            return (byte)((result % range) + min);
+            var value = (result % Convert.ToUInt64(range, CultureInfo.InvariantCulture)) + Convert.ToUInt64(min, System.Globalization.CultureInfo.InvariantCulture);
+            return (T)Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture);
         }
 
-        public static uint GetSecureRandomUInt(uint min, uint max)
+        public static byte GetSecureRandomByte(byte min, byte max) => GetSecureRandom(min, max);
+
+        public static short GetSecureRandomShort(short min, short max) => GetSecureRandom(min, max);
+
+        public static int GetSecureRandomInt(int min, int max) => GetSecureRandom(min, max);
+
+        public static uint GetSecureRandomUInt(uint min, uint max) => GetSecureRandom(min, max);
+
+        public static long GetSecureRandomInt64(long min, long max) => GetSecureRandom(min, max);
+        
+        public static ulong GetSecureRandomUInt64(ulong min, ulong max) => GetSecureRandom(min, max);
+
+        private static ulong Subtract<T>(T max, T min)
         {
-            if (min >= max)
-            {
-                throw new ArgumentException("min must be less than max");
-            }
-
-            var range = max - min;
-            var limit = UInt32.MaxValue - (UInt32.MaxValue % range);
-            uint result;
-            do
-            {
-                result = BitConverter.ToUInt32(GetRandomBytes(4), 0);
-            }
-            while (result >= limit);
-
-            return (result % range) + min;
-        }
-
-        public static long GetSecureRandomInt64()
-        {
-            return BitConverter.ToInt64(GetRandomBytes(8), 0);
+            var a = Convert.ToUInt64(max, CultureInfo.InvariantCulture);
+            var b = Convert.ToUInt64(min, CultureInfo.InvariantCulture);
+            return a - b;
         }
 
         public static ulong GetSecureRandomUInt64()
@@ -90,6 +74,52 @@ namespace Mtf.Extensions.Services
                 rng.GetBytes(bytes);
             }
             return bytes;
+        }
+
+        private static ulong GetRandomUInt64(Type type)
+        {
+            int size;
+            switch (type.Name)
+            {
+                case "Byte":
+                case "SByte":
+                    size = 1;
+                    break;
+                case "Int16":
+                case "UInt16":
+                    size = 2;
+                    break;
+                case "Int32":
+                case "UInt32":
+                    size = 4;
+                    break;
+                case "Int64":
+                case "UInt64":
+                    size = 8;
+                    break;
+                default:
+                    throw new NotSupportedException("Unsupported type provided.");
+            }
+
+            var bytes = new byte[size];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(bytes);
+            }
+
+            switch (size)
+            {
+                case 1:
+                    return bytes[0];
+                case 2:
+                    return BitConverter.ToUInt16(bytes, 0);
+                case 4:
+                    return BitConverter.ToUInt32(bytes, 0);
+                case 8:
+                    return BitConverter.ToUInt64(bytes, 0);
+                default:
+                    return 0;
+            }
         }
     }
 }
