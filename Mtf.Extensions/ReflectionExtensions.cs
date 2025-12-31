@@ -7,7 +7,7 @@ namespace Mtf.Extensions
 {
     public static class ReflectionExtensions
     {
-        public static List<T> CreateInstancesFromNamespace<T>(this string @namespace)
+        public static List<T> CreateInstancesFromNamespace<T>(this string @namespace, Type excludeType = null)
             where T : class
         {
             var result = new List<T>();
@@ -33,7 +33,11 @@ namespace Mtf.Extensions
                 foreach (var type in types)
                 {
                     if (type == null || !type.IsClass || type.IsAbstract || type.Namespace == null || !typeof(T).IsAssignableFrom(type))
-                    //if (type == null || !type.IsClass || type.IsAbstract || type.Namespace == null || !typeof(T).IsAssignableFrom(type) || type.GetConstructor(Type.EmptyTypes) == null)
+                    {
+                        continue;
+                    }
+
+                    if (excludeType != null && excludeType.IsAssignableFrom(type))
                     {
                         continue;
                     }
@@ -62,7 +66,7 @@ namespace Mtf.Extensions
                             }
                         }
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         throw;
                     }
@@ -121,5 +125,4 @@ namespace Mtf.Extensions
             return result;
         }
     }
-
 }
