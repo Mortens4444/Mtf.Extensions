@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace Mtf.Extensions
 {
@@ -78,5 +79,13 @@ namespace Mtf.Extensions
             return false;
         }
 
+        public static T GetAttribute<T>(this Type type, string propertyName) where T : Attribute
+        {
+            if (type == null)
+            {
+                return null;
+            }
+            return type.GetProperty(propertyName)?.GetCustomAttribute<T>();
+        }
     }
 }

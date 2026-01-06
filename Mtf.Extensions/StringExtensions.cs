@@ -3,6 +3,7 @@ using Mtf.Extensions.Services;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Net;
 using System.Security;
 using System.Text;
@@ -755,6 +756,29 @@ namespace Mtf.Extensions
         {
             var bytesToDecode = Convert.FromBase64String(value);
             return Encoding.UTF8.GetString(bytesToDecode);
+        }
+
+        public static int IndexOfAny(this string text, IEnumerable<string> keywords, StringComparison comparison = StringComparison.OrdinalIgnoreCase)
+        {
+            var keywordsList = keywords.ToList();
+            if (string.IsNullOrEmpty(text) || keywords == null || keywordsList.Count == 0)
+                return -1;
+
+            int minIndex = -1;
+
+            foreach (var keyword in keywordsList)
+            {
+                int index = text.IndexOf(keyword, comparison);
+                if (index != -1)
+                {
+                    if (minIndex == -1 || index < minIndex)
+                    {
+                        minIndex = index;
+                    }
+                }
+            }
+
+            return minIndex;
         }
 
         /// <summary>
