@@ -16,5 +16,20 @@ namespace Mtf.Windows.Forms.Extensions
             form.Location = new Point(rectangle.X, rectangle.Y);
             form.Size = new Size(rectangle.Width, rectangle.Height);
         }
+
+        public static bool IsDisposingOrDisposed(this Form form)
+        {
+            try
+            {
+                return (bool)form.Invoke(new Func<bool>(() =>
+                {
+                    return form.Disposing || form.IsDisposed;
+                }));
+            }
+            catch
+            {
+                return true;
+            }
+        }
     }
 }

@@ -45,5 +45,38 @@ namespace Mtf.Windows.Forms.Extensions
         {
             return item?.SubItems.Cast<ListViewItem.ListViewSubItem>().Select(subItem => subItem.Text);
         }
+
+        public static bool IsDirectory(this ListViewItem listViewItem)
+        {
+            return listViewItem.SubItems[1].Text == ListViewExtensions.Directory;
+        }
+
+        public static int GetFileSize(this ListViewItem listViewItem)
+        {
+            return Convert.ToInt32(listViewItem.SubItems[2].Text);
+        }
+
+        public static string ChangeWorkingDirectory(this ListViewItem selectedListViewItem, string currentDirectory)
+        {
+            if (selectedListViewItem.IsDirectory())
+            {
+                if (selectedListViewItem.Text == ListViewExtensions.ParentDirectory)
+                {
+                    var index = currentDirectory.LastIndexOf('/');
+                    var parentDirectory = index >= 0 ? currentDirectory.Substring(0, index).TrimEnd('/') : currentDirectory;
+                    if (parentDirectory == String.Empty)
+                    {
+                        parentDirectory = "/";
+                    }
+                    return parentDirectory;
+                }
+                else
+                {
+                    var folderSeparator = currentDirectory.EndsWith("/") ? String.Empty : "/";
+                    return String.Concat(currentDirectory, folderSeparator, selectedListViewItem.Text);
+                }
+            }
+            return currentDirectory;
+        }
     }
 }

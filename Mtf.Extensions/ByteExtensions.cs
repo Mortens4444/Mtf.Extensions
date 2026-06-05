@@ -74,6 +74,13 @@ namespace Mtf.Extensions
         {
             return (byte)(value & (byte)Math.Pow(2, bitIndex)) != 0;
         }
+        //public static class ByteExtensions
+        //{
+        //    public static bool IsBitSet(this byte value, byte pattern)
+        //    {
+        //        return (value & pattern) == pattern;
+        //    }
+        //}
 
         public static byte GetSubBitConbinationValue(this byte value, int bitIndex, int numberOfBits)
         {
