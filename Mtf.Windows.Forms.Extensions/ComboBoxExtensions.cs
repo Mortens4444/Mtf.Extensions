@@ -54,7 +54,7 @@ namespace Mtf.Extensions
             SafeSelect(comboBox, selectedIndex);
         }
 
-        public static void FillAndSelectFirst<T>(this ComboBox comboBox, IEnumerable list)
+        public static void FillAndSelectFirst(this ComboBox comboBox, IEnumerable list)
         {
             FillAndSelect(comboBox, list, 0);
         }
