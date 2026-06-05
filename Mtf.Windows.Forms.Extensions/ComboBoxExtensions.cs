@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -41,10 +42,21 @@ namespace Mtf.Extensions
             comboBox.SelectFirst();
         }
 
+        public static void FillAndSelect(this ComboBox comboBox, IEnumerable list, int selectedIndex = 0)
+        {
+            comboBox.DataSource = list;
+            SafeSelect(comboBox, selectedIndex);
+        }
+
         public static void FillAndSelect<T>(this ComboBox comboBox, IList<T> list, int selectedIndex = 0)
         {
             comboBox.DataSource = list;
             SafeSelect(comboBox, selectedIndex);
+        }
+
+        public static void FillAndSelectFirst<T>(this ComboBox comboBox, IEnumerable list)
+        {
+            FillAndSelect(comboBox, list, 0);
         }
 
         public static void FillAndSelectFirst<T>(this ComboBox comboBox, IList<T> list)
