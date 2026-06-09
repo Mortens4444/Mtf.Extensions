@@ -8,6 +8,11 @@ namespace Mtf.Extensions
 {
     public static class ByteArrayExtensions
     {
+        public static bool IsNullOrEmpty(this byte[] data)
+        {
+            return data == null || data.Length == 0;
+        }
+
         public static byte[] AppendArrays(this byte[] first, params byte[][] arrays)
         {
             if (first == null)
