@@ -10,11 +10,6 @@ namespace Mtf.Windows.Forms.Extensions
 {
     public static class ListViewItemExtensions
     {
-        public static string ToString(this ListViewItem item)
-        {
-            return ConvertToString(item);
-        }
-
         public static string ConvertToString(this ListViewItem item)
         {
             if (item == null)
@@ -33,12 +28,12 @@ namespace Mtf.Windows.Forms.Extensions
 
         public static ReadOnlyCollection<string> ToArrayList(this ListViewItem item)
         {
-            return new ReadOnlyCollection<string>(ToEnumerable(item).ToList());
+            return new ReadOnlyCollection<string>((ToEnumerable(item) ?? Enumerable.Empty<string>()).ToList());
         }
 
         public static string ToStringInPreferredFormat(this ListViewItem item)
         {
-            return String.Join("\t", ToEnumerable(item));
+            return String.Join("\t", ToEnumerable(item) ?? Enumerable.Empty<string>());
         }
 
         private static IEnumerable<string> ToEnumerable(ListViewItem item)
@@ -48,12 +43,12 @@ namespace Mtf.Windows.Forms.Extensions
 
         public static bool IsDirectory(this ListViewItem listViewItem)
         {
-            return listViewItem.SubItems[1].Text == ListViewExtensions.Directory;
+            return listViewItem.SubItems.Count > 1 && listViewItem.SubItems[1].Text == ListViewExtensions.Directory;
         }
 
         public static int GetFileSize(this ListViewItem listViewItem)
         {
-            return Convert.ToInt32(listViewItem.SubItems[2].Text);
+            return listViewItem.SubItems.Count > 2 ? Convert.ToInt32(listViewItem.SubItems[2].Text, CultureInfo.InvariantCulture) : 0;
         }
 
         public static string ChangeWorkingDirectory(this ListViewItem selectedListViewItem, string currentDirectory)

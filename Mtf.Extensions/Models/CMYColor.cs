@@ -24,9 +24,9 @@ namespace Mtf.Extensions.Models
             Color = color;
 
             var tuple = RgbToCmy(color);
-            C = (int)Math.Round(tuple.Item1);
-            M = (int)Math.Round(tuple.Item2);
-            Y = (int)Math.Round(tuple.Item3);
+            C = (int)Math.Round(tuple.Item1 * 255);
+            M = (int)Math.Round(tuple.Item2 * 255);
+            Y = (int)Math.Round(tuple.Item3 * 255);
         }
 
         public CMYColor(double C, double M, double Y)
@@ -36,7 +36,7 @@ namespace Mtf.Extensions.Models
             this.Y = (int)Math.Round(Y);
 
             A = 255;
-            Color = CmyToRgb(C, M, Y);
+            Color = CmyToRgb(this.C, this.M, this.Y);
             R = Color.R;
             G = Color.G;
             B = Color.B;
@@ -62,11 +62,14 @@ namespace Mtf.Extensions.Models
 
         public static Color CmyToRgb(double c, double m, double y)
         {
-            var r = (int)((1 - c) * 255);
-            var g = (int)((1 - m) * 255);
-            var b = (int)((1 - y) * 255);
+            var r = (int)Math.Round((1 - (c / 255.0)) * 255);
+            var g = (int)Math.Round((1 - (m / 255.0)) * 255);
+            var b = (int)Math.Round((1 - (y / 255.0)) * 255);
 
-            return Color.FromArgb(r, g, b);
+            return Color.FromArgb(
+                Math.Max(0, Math.Min(255, r)),
+                Math.Max(0, Math.Min(255, g)),
+                Math.Max(0, Math.Min(255, b)));
         }
     }
 }

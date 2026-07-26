@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mtf.Extensions.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
@@ -35,7 +36,11 @@ namespace Mtf.Extensions
             }
 
             var ipAndPort = endpointText.Split(':');
-            return new Tuple<string, ushort>(ipAndPort[0], Convert.ToUInt16(ipAndPort[1], CultureInfo.InvariantCulture));
+            if (ipAndPort.Length < 2 || !UInt16.TryParse(ipAndPort[1], NumberStyles.Integer, CultureInfo.InvariantCulture, out var port))
+            {
+                throw new LocalizedException("Port value cannot be parsed from value: {0}.", endpointText);
+            }
+            return new Tuple<string, ushort>(ipAndPort[0], port);
         }
 
         public static string GetIpAddress(this EndPoint endpoint)
@@ -59,7 +64,11 @@ namespace Mtf.Extensions
             }
 
             var ipAndPort = endpointText.Split(':');
-            return Convert.ToUInt16(ipAndPort[1], CultureInfo.InvariantCulture);
+            if (ipAndPort.Length < 2 || !UInt16.TryParse(ipAndPort[1], NumberStyles.Integer, CultureInfo.InvariantCulture, out var port))
+            {
+                throw new LocalizedException("Port value cannot be parsed from value: {0}.", endpointText);
+            }
+            return port;
         }
     }
 }

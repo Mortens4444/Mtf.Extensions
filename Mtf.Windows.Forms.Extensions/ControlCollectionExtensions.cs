@@ -31,6 +31,11 @@ namespace Mtf.Windows.Forms.Extensions
 
         public static IEnumerable<Control> Where(this Control.ControlCollection controls, Func<Control, bool> predicate)
         {
+            if (controls == null || predicate == null)
+            {
+                yield break;
+            }
+
             foreach (Control control in controls)
             {
                 if (predicate(control))

@@ -87,7 +87,7 @@ namespace Mtf.Extensions
 
         public static Color ConvertToBlackOrWhite(this Color value)
         {
-            var distance = value.GetBT709Value();
+            var distance = GetComponentValue(value.GetBT709Value());
             return (distance < 128) ? Color.Black : Color.White;
         }
 
@@ -279,12 +279,12 @@ namespace Mtf.Extensions
 
         public static Color ConvertToInverseGreenBlue(this Color value)
         {
-            return Color.FromArgb(byte.MaxValue - value.R, byte.MaxValue - value.G, byte.MaxValue - value.B);
+            return Color.FromArgb(value.R, byte.MaxValue - value.G, byte.MaxValue - value.B);
         }
 
         public static Color ConvertToInverseRedGreen(this Color value)
         {
-            return Color.FromArgb(byte.MaxValue - value.R, byte.MaxValue - value.G, byte.MaxValue - value.B);
+            return Color.FromArgb(byte.MaxValue - value.R, byte.MaxValue - value.G, value.B);
         }
 
         public static Color ConvertToRBG(this Color value)
@@ -359,7 +359,7 @@ namespace Mtf.Extensions
 
             value *= 255;
             var v = Convert.ToInt32(value);
-            var p = Convert.ToInt32(m);
+            var p = Convert.ToInt32(m * 255);
             var q = Convert.ToInt32(value * (1 - (f * saturation)));
             var t = Convert.ToInt32(value * (1 - ((1 - f) * saturation)));
 
@@ -386,8 +386,7 @@ namespace Mtf.Extensions
                     break;
             }
 
-            var delta = Convert.ToInt32(c.R + (m * c.G) + (m * c.B) + m);
-            return Color.FromArgb(255, c.R + delta, c.G + delta, c.B + delta);
+            return c;
         }
 
         public static Color TransformColor(this Color value, ColorTransformMethod method)

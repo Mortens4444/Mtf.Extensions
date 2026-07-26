@@ -1,4 +1,5 @@
-﻿using Mtf.Extensions.Interfaces;
+﻿using Mtf.Extensions;
+using Mtf.Extensions.Interfaces;
 using System;
 using System.Drawing;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace Mtf.Windows.Forms.Extensions
             {
                 if (gridPosition != null)
                 {
-                    tableLayoutPanel.AddControl(control, gridPosition);
+                    TableLayoutPanelExtensions.AddControl(tableLayoutPanel, control, gridPosition);
                 }
                 else
                 {
@@ -79,7 +80,7 @@ namespace Mtf.Windows.Forms.Extensions
 
             if (control.InvokeRequired)
             {
-                control.InvokeAsync(action);
+                control.Invoke(action);
             }
             else
             {
@@ -92,10 +93,17 @@ namespace Mtf.Windows.Forms.Extensions
             if (control != null && !control.IsDisposed)
             {
                 control.Parent?.Controls.Remove(control);
-                control.BeginInvoke((Action)(() =>
+                if (control.IsHandleCreated)
+                {
+                    control.BeginInvoke((Action)(() =>
+                    {
+                        control.Dispose();
+                    }));
+                }
+                else
                 {
                     control.Dispose();
-                }));
+                }
             }
         }
 
@@ -137,7 +145,19 @@ namespace Mtf.Windows.Forms.Extensions
                 return;
             }
 
+            var oldFont = control.Font;
             control.Font = new Font(familyName, emSize, fontStyle);
+
+            // Only dispose fonts we previously created ourselves here; the ambient/parent
+            // default font is shared and disposing it would break other controls using it.
+            if (oldFont != null
+                && !ReferenceEquals(oldFont, Control.DefaultFont)
+                && !ReferenceEquals(oldFont, SystemFonts.DefaultFont)
+                && (control.Parent == null || !ReferenceEquals(oldFont, control.Parent.Font)))
+            {
+                oldFont.Dispose();
+            }
+
             control.ForeColor = foreColor;
             control.Text = text;
         }
@@ -153,7 +173,7 @@ namespace Mtf.Windows.Forms.Extensions
         private static void InternalSetImage(Control control, Image image, bool useClone)
         {
             Image oldImage;
-            var newImage = useClone ? (Image)image.Clone() : image;
+            var newImage = image != null && useClone ? (Image)image.Clone() : image;
             if (control is PictureBox pictureBox)
             {
                 oldImage = pictureBox.Image;
@@ -181,7 +201,7 @@ namespace Mtf.Windows.Forms.Extensions
 
         private static void SetTextOnImage(Control control, Image image, Color shadowColor, int shadowOffset)
         {
-            if (String.IsNullOrEmpty(control.Text))
+            if (image == null || String.IsNullOrEmpty(control.Text))
             {
                 return;
             }

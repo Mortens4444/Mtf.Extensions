@@ -50,13 +50,30 @@ namespace Mtf.Extensions
         public static Type GetTypeByName(string typeFullname)
         {
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            return assemblies.SelectMany(assembly => assembly.GetTypes())
-                .First(type => type.FullName == typeFullname);
+            var allTypes = new List<Type>();
+            foreach (var assembly in assemblies)
+            {
+                try
+                {
+                    allTypes.AddRange(assembly.GetTypes());
+                }
+                catch (ReflectionTypeLoadException rex)
+                {
+                    allTypes.AddRange(rex.Types.Where(type => type != null));
+                }
+                catch (Exception)
+                {
+                    // Some assemblies (e.g. ones with an unresolvable optional dependency)
+                    // cannot have their types enumerated at all; skip rather than aborting the search.
+                }
+            }
+
+            return allTypes.First(type => type.FullName == typeFullname);
         }
 
         public static bool IsArray(this Type type)
         {
-            return type != null && type.FullName == "System.Array";
+            return type != null && type.IsArray;
         }
 
         public static bool IsPrimitiveOrString(this Type type)

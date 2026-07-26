@@ -9,7 +9,8 @@ namespace Mtf.Windows.Forms.Extensions.Services
             PathProvider.Maps,
             PathProvider.Music,
             PathProvider.SoundEffects,
-            PathProvider.Characters
+            PathProvider.Characters,
+            PathProvider.VideoClips
         };
 
         public static void CreateApplicationDirectories()

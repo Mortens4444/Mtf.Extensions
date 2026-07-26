@@ -19,6 +19,16 @@ namespace Mtf.Windows.Forms.Extensions
 
         public static bool IsDisposingOrDisposed(this Form form)
         {
+            if (form == null || form.IsDisposed)
+            {
+                return true;
+            }
+
+            if (!form.IsHandleCreated)
+            {
+                return form.Disposing;
+            }
+
             try
             {
                 return (bool)form.Invoke(new Func<bool>(() =>
@@ -26,9 +36,13 @@ namespace Mtf.Windows.Forms.Extensions
                     return form.Disposing || form.IsDisposed;
                 }));
             }
-            catch
+            catch (ObjectDisposedException)
             {
                 return true;
+            }
+            catch (InvalidOperationException)
+            {
+                return form.Disposing || form.IsDisposed;
             }
         }
     }

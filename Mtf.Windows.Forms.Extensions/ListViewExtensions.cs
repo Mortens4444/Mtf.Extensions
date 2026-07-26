@@ -34,28 +34,32 @@ namespace Mtf.Windows.Forms.Extensions
             var items = new List<ListViewItem>();
             foreach (var item in folderContent)
             {
-                listViewItem = new ListViewItem();
-                if (item != "../")
+                if (item == "../")
                 {
-                    if (item.EndsWith("/"))
-                    {
-                        listViewItem.Text = item.TrimEnd('/');
-                        listViewItem.SubItems.Add(Directory);
-                    }
-                    else
-                    {
-                        var properties = item.Split(' ');
-                        if (properties.Length > 2)
-                        {
-                            var fileSize = Int32.Parse(properties[1], NumberStyles.HexNumber);
-                            listViewItem.Text = String.Join(" ", properties.Skip(2));
-                            listViewItem.SubItems.Add(String.Empty);
-                            listViewItem.SubItems.Add(fileSize.ToString());
-                            listViewItem.SubItems.Add(properties[0]);
-                        }
-                    }
-                    items.Add(listViewItem);
+                    continue;
                 }
+
+                listViewItem = new ListViewItem();
+                if (item.EndsWith("/"))
+                {
+                    listViewItem.Text = item.TrimEnd('/');
+                    listViewItem.SubItems.Add(Directory);
+                }
+                else
+                {
+                    var properties = item.Split(' ');
+                    if (properties.Length <= 2)
+                    {
+                        continue;
+                    }
+
+                    var fileSize = Int32.Parse(properties[1], NumberStyles.HexNumber, CultureInfo.InvariantCulture);
+                    listViewItem.Text = String.Join(" ", properties.Skip(2));
+                    listViewItem.SubItems.Add(String.Empty);
+                    listViewItem.SubItems.Add(fileSize.ToString(CultureInfo.InvariantCulture));
+                    listViewItem.SubItems.Add(properties[0]);
+                }
+                items.Add(listViewItem);
             }
             items.Sort(Comparer);
             for (int i = 0; i < items.Count; i++)
@@ -96,7 +100,7 @@ namespace Mtf.Windows.Forms.Extensions
         {
             foreach (ListViewItem item in listView.Items)
             {
-                if (item.Tag.Equals(value))
+                if (Equals(item.Tag, value))
                 {
                     return true;
                 }

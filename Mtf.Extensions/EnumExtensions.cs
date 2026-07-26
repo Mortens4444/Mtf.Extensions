@@ -13,6 +13,11 @@ namespace Mtf.Extensions
         {
             var type = typeof(TAttribute);
             var field = value.GetType().GetField(value.ToString());
+            if (field == null)
+            {
+                return Enumerable.Empty<object>();
+            }
+
             var attributes = field.GetCustomAttributes(type, false) as TAttribute[];
             return attributes.Select(attribute => type.GetProperty(propertyName).GetValue(attribute));
         }

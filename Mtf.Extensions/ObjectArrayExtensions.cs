@@ -18,7 +18,7 @@ namespace Mtf.Extensions
 
         public static string ToArrayString(this object[] elements, int startIndex, int endIndex, char separator = ' ')
         {
-            if (elements == null || elements.Length == 0)
+            if (elements == null || elements.Length == 0 || startIndex >= endIndex)
             {
                 return String.Empty;
             }

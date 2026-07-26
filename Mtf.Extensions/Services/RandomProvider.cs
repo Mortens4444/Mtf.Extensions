@@ -14,8 +14,10 @@ namespace Mtf.Extensions.Services
                 throw new ArgumentException("min must be less than max");
             }
 
-            var range = Subtract(max, min);
-            var limit = ulong.MaxValue - (ulong.MaxValue % Convert.ToUInt64(range, CultureInfo.InvariantCulture));
+            var minDecimal = Convert.ToDecimal(min, CultureInfo.InvariantCulture);
+            var maxDecimal = Convert.ToDecimal(max, CultureInfo.InvariantCulture);
+            var range = (ulong)(maxDecimal - minDecimal);
+            var limit = ulong.MaxValue - (ulong.MaxValue % range);
 
             ulong result;
             do
@@ -24,7 +26,7 @@ namespace Mtf.Extensions.Services
             }
             while (result >= limit);
 
-            var value = (result % Convert.ToUInt64(range, CultureInfo.InvariantCulture)) + Convert.ToUInt64(min, CultureInfo.InvariantCulture);
+            var value = minDecimal + (result % range);
             return (T)Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture);
         }
 
@@ -39,13 +41,6 @@ namespace Mtf.Extensions.Services
         public static long GetSecureRandomInt64(long min, long max) => GetSecureRandom(min, max);
         
         public static ulong GetSecureRandomUInt64(ulong min, ulong max) => GetSecureRandom(min, max);
-
-        private static ulong Subtract<T>(T max, T min)
-        {
-            var a = Convert.ToUInt64(max, CultureInfo.InvariantCulture);
-            var b = Convert.ToUInt64(min, CultureInfo.InvariantCulture);
-            return a - b;
-        }
 
         public static ulong GetSecureRandomUInt64()
         {

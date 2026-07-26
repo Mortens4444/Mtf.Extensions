@@ -11,7 +11,7 @@
 
         public override string ToString()
         {
-            return Object.ToString();
+            return Object?.ToString() ?? string.Empty;
         }
     }
 }

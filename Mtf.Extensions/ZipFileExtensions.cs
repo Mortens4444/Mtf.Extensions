@@ -26,10 +26,19 @@ namespace Mtf.Extensions
 
         public static XmlDocument GetXmlDocument(this ZipArchive zipArchive, string filename)
         {
-            var contentXml = new XmlDocument();
-            using (var stream = zipArchive.GetFile(filename))
+            var contentXml = new XmlDocument
             {
-                contentXml.Load(stream);
+                XmlResolver = null
+            };
+            var readerSettings = new XmlReaderSettings
+            {
+                DtdProcessing = DtdProcessing.Prohibit,
+                XmlResolver = null
+            };
+            using (var stream = zipArchive.GetFile(filename))
+            using (var reader = XmlReader.Create(stream, readerSettings))
+            {
+                contentXml.Load(reader);
             }
             return contentXml;
         }

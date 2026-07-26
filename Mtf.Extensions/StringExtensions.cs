@@ -191,7 +191,7 @@ namespace Mtf.Extensions
             value = Regex.Replace(value, "&Dagger;", "‡", RegexOptions.IgnoreCase);
             value = Regex.Replace(value, "&permil;", "‰", RegexOptions.IgnoreCase);
             value = Regex.Replace(value, "&lsaquo;", "‹", RegexOptions.IgnoreCase);
-            value = Regex.Replace(value, "&rsaquo", "›", RegexOptions.IgnoreCase);
+            value = Regex.Replace(value, "&rsaquo;", "›", RegexOptions.IgnoreCase);
             value = Regex.Replace(value, "&euro;", "€", RegexOptions.IgnoreCase);
             value = Regex.Replace(value, "&ensp;", "\u2002", RegexOptions.IgnoreCase);
             value = Regex.Replace(value, "&emsp;", "\u2003", RegexOptions.IgnoreCase);
@@ -546,7 +546,7 @@ namespace Mtf.Extensions
             if (startIndex != Constants.NotFound)
             {
                 startIndex += firstElement.Length;
-                var endIndex = value.IndexOf(',', startIndex + 1);
+                var endIndex = value.IndexOf(',', startIndex);
                 return endIndex == Constants.NotFound ? value.Substring(startIndex) : value.Substring(startIndex, endIndex - startIndex);
             }
             return String.Empty;
@@ -683,7 +683,6 @@ namespace Mtf.Extensions
                     case 36: case 37: case 38: _ = sb.Append('L'); break;
                     case 39: case 40: case 41: case 42: _ = sb.Append('o'); break;
                     case 43: case 44: case 45: case 46: _ = sb.Append('O'); break;
-                    case 47: _ = sb.Append('u'); break;
                     case 48: case 49: _ = sb.Append('n'); break;
                     case 50: case 51: _ = sb.Append('N'); break;
                     case 52: case 53: _ = sb.Append('r'); break;
@@ -760,8 +759,11 @@ namespace Mtf.Extensions
 
         public static int IndexOfAny(this string text, IEnumerable<string> keywords, StringComparison comparison = StringComparison.OrdinalIgnoreCase)
         {
+            if (string.IsNullOrEmpty(text) || keywords == null)
+                return -1;
+
             var keywordsList = keywords.ToList();
-            if (string.IsNullOrEmpty(text) || keywords == null || keywordsList.Count == 0)
+            if (keywordsList.Count == 0)
                 return -1;
 
             int minIndex = -1;
@@ -996,7 +998,12 @@ namespace Mtf.Extensions
             const string hex = "0123456789ABCDEF";
             for (var i = 0; i < value.Length; i++)
             {
-                result = (result * 16) + hex.IndexOf(Char.ToUpper(value[i], CultureInfo.CurrentCulture).ToString(), StringComparison.Ordinal);
+                var digit = hex.IndexOf(Char.ToUpper(value[i], CultureInfo.CurrentCulture).ToString(), StringComparison.Ordinal);
+                if (digit < 0)
+                {
+                    throw new FormatException($"'{value[i]}' is not a valid hexadecimal digit.");
+                }
+                result = (result * 16) + digit;
             }
 
             return result;
@@ -1161,7 +1168,7 @@ namespace Mtf.Extensions
                 {
                     startIndex += startDelimiter.Length;
                     var endIndex = value.IndexOf(endDelimiter, startIndex, stringComparison);
-                    if (endIndex > startIndex)
+                    if (endIndex >= startIndex)
                     {
                         return value.Substring(startIndex, endIndex - startIndex);
                     }
@@ -1210,7 +1217,7 @@ namespace Mtf.Extensions
                 return new Tuple<string, ushort>(String.Empty, 0);
             }
             var parts = text.Split(ipAndPortSeparators);
-            if (UInt16.TryParse(parts[1], out var port))
+            if (parts.Length >= 2 && UInt16.TryParse(parts[1], out var port))
             {
                 return new Tuple<string, ushort>(parts[0], port);
             }
@@ -1223,7 +1230,8 @@ namespace Mtf.Extensions
             {
                 return 0;
             }
-            if (UInt16.TryParse(text.Split(ipAndPortSeparators)[1], out var port))
+            var parts = text.Split(ipAndPortSeparators);
+            if (parts.Length >= 2 && UInt16.TryParse(parts[1], out var port))
             {
                 return port;
             }

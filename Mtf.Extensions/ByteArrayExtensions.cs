@@ -284,7 +284,7 @@ namespace Mtf.Extensions
         {
             if ((array1 == null) && (array2 == null))
             {
-                return 0;
+                return 100;
             }
 
             if ((array1 == null) || (array2 == null))

@@ -11,7 +11,7 @@ namespace Mtf.Extensions
         {
             return task?.ContinueWith(t =>
             {
-                if (t.Exception != null)
+                if (t.IsFaulted && t.Exception != null)
                 {
                     var aggregateException = t.Exception.Flatten();
                     foreach (var exception in aggregateException.InnerExceptions)
@@ -20,14 +20,15 @@ namespace Mtf.Extensions
                         Console.Error.WriteLine(exception);
                     }
                 }
-            }, CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.Default);
+                t.GetAwaiter().GetResult();
+            }, CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
         }
 
         public static Task<T> LogExceptions<T>(this Task<T> task)
         {
             return task?.ContinueWith(t =>
             {
-                if (t.Exception != null)
+                if (t.IsFaulted && t.Exception != null)
                 {
                     var aggregateException = t.Exception.Flatten();
                     foreach (var exception in aggregateException.InnerExceptions)
@@ -36,8 +37,8 @@ namespace Mtf.Extensions
                         Console.Error.WriteLine(exception);
                     }
                 }
-                return t.Result;
-            }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.Default);
+                return t.GetAwaiter().GetResult();
+            }, CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
         }
     }
 }

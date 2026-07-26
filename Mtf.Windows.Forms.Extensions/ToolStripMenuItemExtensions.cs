@@ -8,6 +8,11 @@ namespace Mtf.Windows.Forms.Extensions
     {
         public static void FillWithEnum<T>(this ToolStripMenuItem menuItem, Action<ToolStripMenuItem, T> onItemClick = null) where T : Enum
         {
+            if (menuItem == null)
+            {
+                throw new ArgumentNullException(nameof(menuItem));
+            }
+
             menuItem.DropDownItems.Clear();
 
             foreach (var value in Enum.GetValues(typeof(T)).Cast<T>())
@@ -28,6 +33,15 @@ namespace Mtf.Windows.Forms.Extensions
 
         public static void FillWithItems<T>(this ToolStripMenuItem menuItem, T[] items, Action<ToolStripMenuItem, T> onItemClick = null)
         {
+            if (menuItem == null)
+            {
+                throw new ArgumentNullException(nameof(menuItem));
+            }
+            if (items == null)
+            {
+                throw new ArgumentNullException(nameof(items));
+            }
+
             menuItem.DropDownItems.Clear();
 
             foreach (var value in items)

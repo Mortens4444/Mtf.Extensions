@@ -1,4 +1,4 @@
-﻿namespace Mtf.General.Extensions
+﻿namespace Mtf.Extensions
 {
     public static class MathExtensions
     {

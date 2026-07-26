@@ -10,7 +10,6 @@ namespace Mtf.Extensions
             {
                 cancellationTokenSource.Cancel();
                 cancellationTokenSource.Dispose();
-                cancellationTokenSource = null;
             }
         }
     }

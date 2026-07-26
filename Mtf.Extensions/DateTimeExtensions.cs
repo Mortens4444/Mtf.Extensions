@@ -13,7 +13,7 @@ namespace Mtf.Extensions
         /// <returns>String representation of the date. For example: 2012.11.15 14:02</returns>
         public static string ToStringInPreferredFormat(this DateTime date)
         {
-            return $"{date.ToShortDateString()} {date.ToLongTimeString()}";
+            return $"{date.ToShortDateString()} {date.ToShortTimeString()}";
         }
         
         public static string ToFriendlyString(this DateTime dateTime)
@@ -28,7 +28,7 @@ namespace Mtf.Extensions
         /// <returns>String representation of the date. For example: 2012.11.15 14:02:35</returns>
         public static string ToStringInPreferredFormatWithSeconds(this DateTime date)
         {
-            return $"{date.ToShortDateString()} {date.ToLongTimeString()}:{date.Second:D2}";
+            return $"{date.ToShortDateString()} {date.ToLongTimeString()}";
         }
     }
 }

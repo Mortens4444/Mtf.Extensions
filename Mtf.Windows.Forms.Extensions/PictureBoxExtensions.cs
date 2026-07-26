@@ -54,7 +54,10 @@ namespace Mtf.Windows.Forms.Extensions
             {
                 if (pictureBox != null)
                 {
-                    pictureBox.Image?.Dispose();
+                    if (!ReferenceEquals(pictureBox.Image, image))
+                    {
+                        pictureBox.Image?.Dispose();
+                    }
                     pictureBox.Image = image;
                 }
             }

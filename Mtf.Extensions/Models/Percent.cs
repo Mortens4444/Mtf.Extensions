@@ -32,6 +32,11 @@ namespace Mtf.Extensions.Models
 
         public static implicit operator Percent(int value)
         {
+            if (value < 0 || value > 100)
+            {
+                throw new ArgumentOutOfRangeException(nameof(value), "Percent value cannot be over 100");
+            }
+
             return new Percent((byte)value);
         }
 

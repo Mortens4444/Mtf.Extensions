@@ -62,9 +62,14 @@ namespace Mtf.Extensions
 
         public static void CloseSocket(this Socket socket)
         {
+            if (socket == null)
+            {
+                return;
+            }
+
             try
             {
-                if (socket?.Connected ?? false)
+                if (socket.Connected)
                 {
                     socket.Shutdown(SocketShutdown.Both);
                 }
@@ -72,11 +77,8 @@ namespace Mtf.Extensions
             catch { }
             finally
             {
-                if (socket != null && !socket.IsBound)
-                {
-                    socket.Close();
-                    socket.Dispose();
-                }
+                socket.Close();
+                socket.Dispose();
             }
         }
     }

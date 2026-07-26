@@ -45,7 +45,7 @@ namespace Mtf.Extensions
                 }
             }
 
-            return 0;
+            throw new ArgumentException($"Character '{value}' is not a valid Base64 character.", nameof(value));
         }
 
         public static char Base64CodeToChar(byte code)

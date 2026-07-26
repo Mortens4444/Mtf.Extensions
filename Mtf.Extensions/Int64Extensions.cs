@@ -6,7 +6,7 @@ namespace Mtf.Extensions
     {
         public static TimeSpan ToTimeSpan(this Int64 value)
         {
-            var ms = (int)value % 100;
+            var ms = (int)(value % 100) * 10;
             var totalSeconds = value / 100;
 
             var seconds = (int)(totalSeconds % 60);
