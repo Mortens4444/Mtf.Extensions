@@ -1,4 +1,4 @@
-using Mtf.Extensions.Models;
+﻿using Mtf.Extensions.Models;
 using System.Drawing;
 
 namespace Mtf.Extensions.Tests;
@@ -41,7 +41,7 @@ public class CMYColorTests
         var color = Color.FromArgb(200, 150, 100);
 
         Color result = default;
-        Assert.DoesNotThrow(() => result = color.ConvertFromCMYToRGB());
+        Ensure.DoesNotThrow(() => result = color.ConvertFromCMYToRGB());
 
         Assert.That(result.R, Is.EqualTo(55));
         Assert.That(result.G, Is.EqualTo(105));
@@ -55,6 +55,6 @@ public class CMYColorTests
     public void ConvertFromCMYToRGB_VariousInputs_NeverThrows(int r, int g, int b)
     {
         var color = Color.FromArgb(r, g, b);
-        Assert.DoesNotThrow(() => color.ConvertFromCMYToRGB());
+        Ensure.DoesNotThrow(() => color.ConvertFromCMYToRGB());
     }
 }

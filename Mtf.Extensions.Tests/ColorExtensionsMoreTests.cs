@@ -1,4 +1,4 @@
-using Mtf.Extensions.Enums;
+﻿using Mtf.Extensions.Enums;
 using System.Drawing;
 
 namespace Mtf.Extensions.Tests;
@@ -49,7 +49,7 @@ public class ColorExtensionsMoreTests
     [Test]
     public void GetNormalizedValue_UnsupportedComponent_ThrowsNotSupportedException()
     {
-        Assert.Throws<NotSupportedException>(() => ColorExtensions.GetNormalizedValue((ColorComponent)99, 10, 20, 30));
+        Ensure.Throws<NotSupportedException>(() => ColorExtensions.GetNormalizedValue((ColorComponent)99, 10, 20, 30));
     }
 
     [Test]
@@ -228,7 +228,7 @@ public class ColorExtensionsMoreTests
 
         foreach (var convert in YuvAndCmyScaleConversions)
         {
-            Assert.DoesNotThrow(() => convert(color));
+            Ensure.DoesNotThrow(() => convert(color));
         }
     }
 
@@ -325,7 +325,7 @@ public class ColorExtensionsMoreTests
     [Test]
     public void ConvertFromYUVToRGB_DoesNotThrow()
     {
-        Assert.DoesNotThrow(() => Color.FromArgb(10, 20, 30).ConvertFromYUVToRGB());
+        Ensure.DoesNotThrow(() => Color.FromArgb(10, 20, 30).ConvertFromYUVToRGB());
     }
 
     [Test]
@@ -359,7 +359,7 @@ public class ColorExtensionsMoreTests
     {
         var color = Color.FromArgb(10, 20, 30);
 
-        Assert.DoesNotThrow(() => color.TransformColor(method));
+        Ensure.DoesNotThrow(() => color.TransformColor(method));
     }
 
     private static IEnumerable<ColorTransformMethod> AllTransformMethods()
@@ -370,7 +370,7 @@ public class ColorExtensionsMoreTests
     [Test]
     public void TransformColor_UnsupportedMethod_ThrowsNotSupportedException()
     {
-        Assert.Throws<NotSupportedException>(() => Color.Red.TransformColor((ColorTransformMethod)255));
+        Ensure.Throws<NotSupportedException>(() => Color.Red.TransformColor((ColorTransformMethod)255));
     }
 
     [Test]

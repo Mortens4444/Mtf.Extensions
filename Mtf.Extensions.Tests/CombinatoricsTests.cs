@@ -1,4 +1,4 @@
-using Mtf.Extensions.Services;
+﻿using Mtf.Extensions.Services;
 using System.Collections;
 
 namespace Mtf.Extensions.Tests;
@@ -10,7 +10,7 @@ public class CombinatoricsTests
     {
         string password = null;
 
-        Assert.Throws<ArgumentNullException>(() => Combinatorics.BruteForce(ref password, new[] { 'a', 'b' }));
+        Ensure.Throws<ArgumentNullException>(() => Combinatorics.BruteForce(ref password, new[] { 'a', 'b' }));
     }
 
     [Test]
@@ -18,7 +18,7 @@ public class CombinatoricsTests
     {
         var password = "a";
 
-        Assert.Throws<ArgumentNullException>(() => Combinatorics.BruteForce(ref password, null));
+        Ensure.Throws<ArgumentNullException>(() => Combinatorics.BruteForce(ref password, null));
     }
 
     [Test]
@@ -89,7 +89,7 @@ public class CombinatoricsTests
         string letters = null;
         var result = new ArrayList();
 
-        Assert.Throws<ArgumentNullException>(() => Combinatorics.GetPermutations(letters, ref result, string.Empty));
+        Ensure.Throws<ArgumentNullException>(() => Combinatorics.GetPermutations(letters, ref result, string.Empty));
     }
 
     [Test]
@@ -97,7 +97,7 @@ public class CombinatoricsTests
     {
         ArrayList result = null;
 
-        Assert.Throws<ArgumentNullException>(() => Combinatorics.GetPermutations("ab", ref result, string.Empty));
+        Ensure.Throws<ArgumentNullException>(() => Combinatorics.GetPermutations("ab", ref result, string.Empty));
     }
 
     [Test]

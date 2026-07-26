@@ -1,4 +1,4 @@
-using DescriptionAttribute = System.ComponentModel.DescriptionAttribute;
+﻿using DescriptionAttribute = System.ComponentModel.DescriptionAttribute;
 
 namespace Mtf.Extensions.Tests;
 
@@ -62,7 +62,7 @@ public class EnumExtensionsMoreTests
     [Test]
     public void GetFromDescription_NullInput_ThrowsArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => EnumExtensions.GetFromDescription<PlainEnum>(null));
+        Ensure.Throws<ArgumentNullException>(() => EnumExtensions.GetFromDescription<PlainEnum>(null));
     }
 
     [Test]
@@ -84,7 +84,7 @@ public class EnumExtensionsMoreTests
     [Test]
     public void GetFromDescription_UnknownName_ThrowsArgumentException()
     {
-        Assert.Throws<ArgumentException>(() => EnumExtensions.GetFromDescription<PlainEnum>("NoSuchValue"));
+        Ensure.Throws<ArgumentException>(() => EnumExtensions.GetFromDescription<PlainEnum>("NoSuchValue"));
     }
 
     [Test]
@@ -98,7 +98,7 @@ public class EnumExtensionsMoreTests
     [Test]
     public void GetValueFromDescription_UnknownDescription_ThrowsArgumentException()
     {
-        Assert.Throws<ArgumentException>(() => EnumExtensions.GetValueFromDescription<PlainEnum>("no such description"));
+        Ensure.Throws<ArgumentException>(() => EnumExtensions.GetValueFromDescription<PlainEnum>("no such description"));
     }
 
     [Test]
@@ -140,7 +140,7 @@ public class EnumExtensionsMoreTests
     {
         Enum value = null;
 
-        Assert.Throws<ArgumentNullException>(() => value.HasAnyFlag(FlagsEnum.A));
+        Ensure.Throws<ArgumentNullException>(() => value.HasAnyFlag(FlagsEnum.A));
     }
 
     [Test]

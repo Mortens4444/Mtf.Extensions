@@ -1,4 +1,4 @@
-using Mtf.Extensions.Services;
+﻿using Mtf.Extensions.Services;
 
 namespace Mtf.Extensions.Tests;
 
@@ -47,25 +47,25 @@ public class RandomProviderMoreTests
     [Test]
     public void GetSecureRandom_MinEqualsMax_ThrowsArgumentException()
     {
-        Assert.Throws<ArgumentException>(() => RandomProvider.GetSecureRandomInt(5, 5));
+        Ensure.Throws<ArgumentException>(() => RandomProvider.GetSecureRandomInt(5, 5));
     }
 
     [Test]
     public void GetSecureRandom_MinGreaterThanMax_ThrowsArgumentException()
     {
-        Assert.Throws<ArgumentException>(() => RandomProvider.GetSecureRandomInt(10, 5));
+        Ensure.Throws<ArgumentException>(() => RandomProvider.GetSecureRandomInt(10, 5));
     }
 
     [Test]
     public void GetSecureRandomUInt64_NoArgs_DoesNotThrow()
     {
-        Assert.DoesNotThrow(() => RandomProvider.GetSecureRandomUInt64());
+        Ensure.DoesNotThrow(() => RandomProvider.GetSecureRandomUInt64());
     }
 
     [Test]
     public void GetSecureRandomDouble_DoesNotThrow()
     {
-        Assert.DoesNotThrow(() => RandomProvider.GetSecureRandomDouble());
+        Ensure.DoesNotThrow(() => RandomProvider.GetSecureRandomDouble());
     }
 
     [Test]

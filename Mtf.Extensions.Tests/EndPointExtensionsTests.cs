@@ -1,4 +1,4 @@
-using Mtf.Extensions.Exceptions;
+﻿using Mtf.Extensions.Exceptions;
 using System.Net;
 using System.Net.Sockets;
 
@@ -20,7 +20,7 @@ public class EndPointExtensionsTests
     {
         var endpoint = new TextEndPoint("justanaddress");
 
-        Assert.Throws<LocalizedException>(() => endpoint.GetPort());
+        Ensure.Throws<LocalizedException>(() => endpoint.GetPort());
     }
 
     [Test]
@@ -28,7 +28,7 @@ public class EndPointExtensionsTests
     {
         var endpoint = new TextEndPoint("justanaddress");
 
-        Assert.Throws<LocalizedException>(() => endpoint.GetIpAddressAndPort());
+        Ensure.Throws<LocalizedException>(() => endpoint.GetIpAddressAndPort());
     }
 
     [Test]

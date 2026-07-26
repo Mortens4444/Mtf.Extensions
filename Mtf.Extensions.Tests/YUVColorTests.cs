@@ -1,4 +1,4 @@
-using Mtf.Extensions.Enums;
+﻿using Mtf.Extensions.Enums;
 using Mtf.Extensions.Models;
 using System.Drawing;
 
@@ -43,7 +43,7 @@ public class YUVColorTests
     [Test]
     public void Constructor_UnsupportedType_ThrowsNotSupportedException()
     {
-        Assert.Throws<NotSupportedException>(() => new YUVColor(0, 0, 0, (ColorSpaceType)99));
+        Ensure.Throws<NotSupportedException>(() => new YUVColor(0, 0, 0, (ColorSpaceType)99));
     }
 
     [Test]
@@ -61,7 +61,7 @@ public class YUVColorTests
     [Test]
     public void ConvertToColor_NullInput_ThrowsArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => YUVColor.ConvertToColor(null));
+        Ensure.Throws<ArgumentNullException>(() => YUVColor.ConvertToColor(null));
     }
 
     [Test]
@@ -82,6 +82,6 @@ public class YUVColorTests
     [TestCase(0, 0, 255)]
     public void Constructor_FromColor_NeverThrowsForAnyRgbCombination(int r, int g, int b)
     {
-        Assert.DoesNotThrow(() => new YUVColor(Color.FromArgb(r, g, b)));
+        Ensure.DoesNotThrow(() => new YUVColor(Color.FromArgb(r, g, b)));
     }
 }

@@ -1,4 +1,4 @@
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace Mtf.Extensions.Tests;
 
@@ -30,7 +30,7 @@ public class ColorExtensionsTests
     public void ColorFromHSV_PureRed_ReturnsExactRedWithoutThrowing()
     {
         Color result = default;
-        Assert.DoesNotThrow(() => result = ColorExtensions.ColorFromHSV(0, 1, 1));
+        Ensure.DoesNotThrow(() => result = ColorExtensions.ColorFromHSV(0, 1, 1));
         Assert.That(result.R, Is.EqualTo(255));
         Assert.That(result.G, Is.EqualTo(0));
         Assert.That(result.B, Is.EqualTo(0));
@@ -48,6 +48,6 @@ public class ColorExtensionsTests
     [TestCase(0, 0, 1)]
     public void ColorFromHSV_VariousInputs_NeverThrows(double hue, double saturation, double value)
     {
-        Assert.DoesNotThrow(() => ColorExtensions.ColorFromHSV(hue, saturation, value));
+        Ensure.DoesNotThrow(() => ColorExtensions.ColorFromHSV(hue, saturation, value));
     }
 }

@@ -1,4 +1,4 @@
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace Mtf.Extensions.Tests;
 
@@ -27,7 +27,7 @@ public class AssemblyExtensionsTests
     {
         Assembly assembly = null;
 
-        Assert.Throws<ArgumentNullException>(() => assembly.GetTypesInNamespace("Mtf.Extensions.Tests"));
+        Ensure.Throws<ArgumentNullException>(() => assembly.GetTypesInNamespace("Mtf.Extensions.Tests"));
     }
 
     [Test]

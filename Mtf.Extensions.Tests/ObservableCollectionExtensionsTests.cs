@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 namespace Mtf.Extensions.Tests;
 
@@ -9,7 +9,7 @@ public class ObservableCollectionExtensionsTests
     {
         ObservableCollection<int> collection = null;
 
-        Assert.Throws<ArgumentNullException>(() => collection.AddRange(new[] { 1, 2 }));
+        Ensure.Throws<ArgumentNullException>(() => collection.AddRange(new[] { 1, 2 }));
     }
 
     [Test]

@@ -1,4 +1,4 @@
-using System.Text;
+﻿using System.Text;
 
 namespace Mtf.Extensions.Tests;
 
@@ -27,13 +27,13 @@ public class ByteArrayExtensionsMoreTests
     public void AppendArrays_NullFirst_ThrowsArgumentNullException()
     {
         byte[] first = null;
-        Assert.Throws<ArgumentNullException>(() => first.AppendArrays(new byte[] { 1 }));
+        Ensure.Throws<ArgumentNullException>(() => first.AppendArrays(new byte[] { 1 }));
     }
 
     [Test]
     public void AppendArrays_NullArraysParam_ThrowsArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => new byte[] { 1 }.AppendArrays(null));
+        Ensure.Throws<ArgumentNullException>(() => new byte[] { 1 }.AppendArrays(null));
     }
 
     [Test]
@@ -48,13 +48,13 @@ public class ByteArrayExtensionsMoreTests
     public void ToZeroByteTerminatedString_NullValue_ThrowsArgumentNullException()
     {
         byte[] value = null;
-        Assert.Throws<ArgumentNullException>(() => value.ToZeroByteTerminatedString(Encoding.ASCII));
+        Ensure.Throws<ArgumentNullException>(() => value.ToZeroByteTerminatedString(Encoding.ASCII));
     }
 
     [Test]
     public void ToZeroByteTerminatedString_NullEncoding_ThrowsArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => new byte[] { 65 }.ToZeroByteTerminatedString(null));
+        Ensure.Throws<ArgumentNullException>(() => new byte[] { 65 }.ToZeroByteTerminatedString(null));
     }
 
     [Test]
@@ -85,7 +85,7 @@ public class ByteArrayExtensionsMoreTests
     public void Find_ThreeArgOverload_NullArray_ThrowsArgumentNullException()
     {
         byte[] array = null;
-        Assert.Throws<ArgumentNullException>(() => array.Find(new byte[] { 1 }, 0));
+        Ensure.Throws<ArgumentNullException>(() => array.Find(new byte[] { 1 }, 0));
     }
 
     [Test]
@@ -117,14 +117,14 @@ public class ByteArrayExtensionsMoreTests
     public void Find_FourArgOverload_NullArray_ThrowsArgumentNullException()
     {
         byte[] array = null;
-        Assert.Throws<ArgumentNullException>(() => array.Find(new byte[] { 1 }, 0, 1));
+        Ensure.Throws<ArgumentNullException>(() => array.Find(new byte[] { 1 }, 0, 1));
     }
 
     [Test]
     public void Find_FourArgOverload_NullSubArray_ThrowsArgumentNullException()
     {
         var array = new byte[] { 1, 2, 3 };
-        Assert.Throws<ArgumentNullException>(() => array.Find(null, 0, 3));
+        Ensure.Throws<ArgumentNullException>(() => array.Find(null, 0, 3));
     }
 
     [Test]
@@ -147,7 +147,7 @@ public class ByteArrayExtensionsMoreTests
     public void Replace_NullArray_ThrowsArgumentNullException()
     {
         byte[] array = null;
-        Assert.Throws<ArgumentNullException>(() => array.Replace(1, 2));
+        Ensure.Throws<ArgumentNullException>(() => array.Replace(1, 2));
     }
 
     [Test]
@@ -164,7 +164,7 @@ public class ByteArrayExtensionsMoreTests
     public void ToArrayString_ThreeArgOverload_NullArray_ThrowsArgumentNullException()
     {
         byte[] array = null;
-        Assert.Throws<ArgumentNullException>(() => array.ToArrayString(0, 1));
+        Ensure.Throws<ArgumentNullException>(() => array.ToArrayString(0, 1));
     }
 
     [Test]
@@ -202,16 +202,16 @@ public class ByteArrayExtensionsMoreTests
     [Test]
     public void UTF8GetString_DecodesUtf8Bytes()
     {
-        var bytes = Encoding.UTF8.GetBytes("Héllo");
+        var bytes = Encoding.UTF8.GetBytes("HĂ©llo");
 
-        Assert.That(bytes.UTF8GetString(), Is.EqualTo("Héllo"));
+        Assert.That(bytes.UTF8GetString(), Is.EqualTo("HĂ©llo"));
     }
 
     [Test]
     public void ToArrayString_NoArgOverload_NullArray_ThrowsArgumentNullException()
     {
         byte[] array = null;
-        Assert.Throws<ArgumentNullException>(() => array.ToArrayString());
+        Ensure.Throws<ArgumentNullException>(() => array.ToArrayString());
     }
 
     [Test]
@@ -226,7 +226,7 @@ public class ByteArrayExtensionsMoreTests
     public void ToASCIIStringZeroByteTerminated_NullArray_ThrowsArgumentNullException()
     {
         byte[] array = null;
-        Assert.Throws<ArgumentNullException>(() => array.ToASCIIStringZeroByteTerminated());
+        Ensure.Throws<ArgumentNullException>(() => array.ToASCIIStringZeroByteTerminated());
     }
 
     [Test]
@@ -249,7 +249,7 @@ public class ByteArrayExtensionsMoreTests
     public void CreateArray_NullArray_ThrowsArgumentNullException()
     {
         byte[] array = null;
-        Assert.Throws<ArgumentNullException>(() => array.CreateArray(0, 1));
+        Ensure.Throws<ArgumentNullException>(() => array.CreateArray(0, 1));
     }
 
     [Test]

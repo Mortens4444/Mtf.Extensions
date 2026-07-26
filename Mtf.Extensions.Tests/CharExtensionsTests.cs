@@ -1,11 +1,11 @@
-namespace Mtf.Extensions.Tests;
+﻿namespace Mtf.Extensions.Tests;
 
 public class CharExtensionsTests
 {
     [Test]
     public void CharToBase64Code_InvalidCharacter_ThrowsInsteadOfSilentlyReturningZero()
     {
-        Assert.Throws<ArgumentException>(() => '!'.CharToBase64Code());
+        Ensure.Throws<ArgumentException>(() => '!'.CharToBase64Code());
     }
 
     [Test]

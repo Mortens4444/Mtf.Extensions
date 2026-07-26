@@ -1,4 +1,4 @@
-namespace Mtf.Extensions.Tests;
+﻿namespace Mtf.Extensions.Tests;
 
 public class DictionaryExtensionTests
 {
@@ -7,7 +7,7 @@ public class DictionaryExtensionTests
     {
         Dictionary<string, IEnumerable<int>> dictionary = null;
 
-        Assert.Throws<ArgumentNullException>(() => dictionary.AddNotEmpty("key", new[] { 1 }));
+        Ensure.Throws<ArgumentNullException>(() => dictionary.AddNotEmpty("key", new[] { 1 }));
     }
 
     [Test]

@@ -89,7 +89,7 @@ public class ComboBoxExtensionsTests
         using var comboBox = new ComboBox();
         comboBox.Items.Add("a");
 
-        Assert.DoesNotThrow(() => comboBox.SafeSelect(5));
+        Ensure.DoesNotThrow(() => comboBox.SafeSelect(5));
         Assert.That(comboBox.SelectedIndex, Is.EqualTo(-1));
     }
 
@@ -135,13 +135,9 @@ public class ComboBoxExtensionsTests
     {
         using var comboBox = new ComboBox { BindingContext = new BindingContext() };
 
-        comboBox.FillWithTypesInNamespace(typeof(SampleItem).Assembly, typeof(SampleItem).Namespace);
+        comboBox.FillWithTypesInNamespace(typeof(FillWithTypesInNamespaceSample.SampleItem).Assembly, typeof(FillWithTypesInNamespaceSample.SampleItem).Namespace);
 
         Assert.That(comboBox.Items.Count, Is.GreaterThan(0));
-    }
-
-    public class SampleItem
-    {
     }
 
     [Test]
@@ -149,7 +145,7 @@ public class ComboBoxExtensionsTests
     {
         ComboBox comboBox = null;
 
-        Assert.Throws<ArgumentNullException>(() => comboBox.IndexOf("x"));
+        Ensure.Throws<ArgumentNullException>(() => comboBox.IndexOf("x"));
     }
 
     [Test]
@@ -179,7 +175,7 @@ public class ComboBoxExtensionsTests
     {
         var comboBox = new ComboBox();
 
-        Assert.DoesNotThrow(() =>
+        Ensure.DoesNotThrow(() =>
         {
             var result = comboBox.GetSelectedItemThreadSafe();
             Assert.That(result, Is.Null);

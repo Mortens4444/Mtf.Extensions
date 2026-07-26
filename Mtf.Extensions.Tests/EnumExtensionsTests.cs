@@ -1,4 +1,4 @@
-using DescriptionAttribute = System.ComponentModel.DescriptionAttribute;
+﻿using DescriptionAttribute = System.ComponentModel.DescriptionAttribute;
 
 namespace Mtf.Extensions.Tests;
 
@@ -21,7 +21,7 @@ public class EnumExtensionsTests
     {
         var combined = TestFlags.A | TestFlags.B;
 
-        Assert.DoesNotThrow(() => combined.GetEnumAttribute<DescriptionAttribute>("Description").ToList());
+        Ensure.DoesNotThrow(() => combined.GetEnumAttribute<DescriptionAttribute>("Description").ToList());
     }
 
     [Test]
@@ -49,7 +49,7 @@ public class EnumExtensionsTests
         var combined = TestFlags.A | TestFlags.B;
 
         object result = "unset";
-        Assert.DoesNotThrow(() => result = combined.GetSingleEnumAttribute<DescriptionAttribute>("Description"));
+        Ensure.DoesNotThrow(() => result = combined.GetSingleEnumAttribute<DescriptionAttribute>("Description"));
         Assert.That(result, Is.Null);
     }
 }

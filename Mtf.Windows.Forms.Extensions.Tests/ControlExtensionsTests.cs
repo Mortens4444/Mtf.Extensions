@@ -22,7 +22,7 @@ public class ControlExtensionsTests
         Control container = null;
         using var control = new Control();
 
-        Assert.Throws<ArgumentNullException>(() => container.AddControl(control, new GridPosition()));
+        Ensure.Throws<ArgumentNullException>(() => container.AddControl(control, new GridPosition()));
     }
 
     [Test]
@@ -44,7 +44,7 @@ public class ControlExtensionsTests
         Control container = panel; // statically typed as Control, so this exercises ControlExtensions.AddControl itself
         var position = new GridPosition { Column = 1, Row = 2 };
 
-        Assert.DoesNotThrow(() => container.AddControl(control, position));
+        Ensure.DoesNotThrow(() => container.AddControl(control, position));
 
         Assert.That(panel.GetColumn(control), Is.EqualTo(1));
         Assert.That(panel.GetRow(control), Is.EqualTo(2));
@@ -67,7 +67,7 @@ public class ControlExtensionsTests
     {
         var control = new Control();
 
-        Assert.DoesNotThrow(() => control.SafeDispose());
+        Ensure.DoesNotThrow(() => control.SafeDispose());
         Assert.That(control.IsDisposed, Is.True);
     }
 
@@ -77,7 +77,7 @@ public class ControlExtensionsTests
         using var pictureBox = new PictureBox();
         _ = pictureBox.Handle; // force handle creation so InvokeIfRequired actually runs the action
 
-        Assert.DoesNotThrow(() => pictureBox.SetImage(null, true));
+        Ensure.DoesNotThrow(() => pictureBox.SetImage(null, true));
     }
 
     [Test]
@@ -86,7 +86,7 @@ public class ControlExtensionsTests
         using var pictureBox = new PictureBox { Text = "Some text" };
         _ = pictureBox.Handle;
 
-        Assert.DoesNotThrow(() => pictureBox.SetImage(null, false));
+        Ensure.DoesNotThrow(() => pictureBox.SetImage(null, false));
     }
 
     [Test]
@@ -108,7 +108,7 @@ public class ControlExtensionsTests
         Assert.That(firstImage.Width, Is.EqualTo(2));
 
         // ...but the internal clone from the first call is no longer needed and gets disposed.
-        Assert.Throws<ArgumentException>(() => _ = firstClone.Size);
+        Ensure.Throws<ArgumentException>(() => _ = firstClone.Size);
     }
 
     [Test]
@@ -117,7 +117,7 @@ public class ControlExtensionsTests
         using var pictureBox = new PictureBox { Text = "Overlay" };
         _ = pictureBox.Handle;
 
-        Assert.DoesNotThrow(() => pictureBox.SetImage(new Bitmap(10, 10), false));
+        Ensure.DoesNotThrow(() => pictureBox.SetImage(new Bitmap(10, 10), false));
         Assert.That(pictureBox.Image, Is.Not.Null);
     }
 
@@ -137,7 +137,7 @@ public class ControlExtensionsTests
     {
         using var control = new Control();
 
-        Assert.DoesNotThrow(() =>
+        Ensure.DoesNotThrow(() =>
         {
             control.SetOsdText("Arial", 10f, FontStyle.Regular, Color.Red, "Hello");
             control.SetOsdText("Arial", 12f, FontStyle.Bold, Color.Blue, "World");

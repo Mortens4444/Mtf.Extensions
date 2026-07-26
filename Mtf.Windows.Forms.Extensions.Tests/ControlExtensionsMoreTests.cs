@@ -11,7 +11,7 @@ public class ControlExtensionsMoreTests
     {
         Control control = null;
 
-        Assert.Throws<ArgumentNullException>(() => control.ExecuteThreadSafely(() => { }));
+        Ensure.Throws<ArgumentNullException>(() => control.ExecuteThreadSafely(() => { }));
     }
 
     [Test]
@@ -31,7 +31,7 @@ public class ControlExtensionsMoreTests
     {
         Control control = null;
 
-        Assert.Throws<ArgumentNullException>(() => control.ExecuteThreadSafely(() => 42));
+        Ensure.Throws<ArgumentNullException>(() => control.ExecuteThreadSafely(() => 42));
     }
 
     [Test]
@@ -57,7 +57,7 @@ public class ControlExtensionsMoreTests
         control.Dispose();
 
         int result = 0;
-        Assert.DoesNotThrow(() => result = control.ExecuteThreadSafely(() => 42, -1));
+        Ensure.DoesNotThrow(() => result = control.ExecuteThreadSafely(() => 42, -1));
         Assert.That(result, Is.EqualTo(42));
     }
 

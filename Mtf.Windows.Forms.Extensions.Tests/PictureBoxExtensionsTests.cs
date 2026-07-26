@@ -14,8 +14,8 @@ public class PictureBoxExtensionsTests
         var bitmap = new Bitmap(1, 1);
         pictureBox.SetImage(bitmap);
 
-        Assert.DoesNotThrow(() => pictureBox.SetImage(pictureBox.Image));
-        Assert.DoesNotThrow(() => _ = pictureBox.Image.Size);
+        Ensure.DoesNotThrow(() => pictureBox.SetImage(pictureBox.Image));
+        Ensure.DoesNotThrow(() => _ = pictureBox.Image.Size);
     }
 
     [Test]
@@ -28,6 +28,6 @@ public class PictureBoxExtensionsTests
         using var secondBitmap = new Bitmap(2, 2);
         pictureBox.SetImage(secondBitmap);
 
-        Assert.Throws<ArgumentException>(() => _ = firstBitmap.Size);
+        Ensure.Throws<ArgumentException>(() => _ = firstBitmap.Size);
     }
 }

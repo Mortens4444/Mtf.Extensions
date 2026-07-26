@@ -26,7 +26,7 @@ public class StringExtensionsTests
     [Test]
     public void GetIpAddressAndPortFromEndPoint_MissingPort_ThrowsLocalizedException()
     {
-        Assert.Throws<LocalizedException>(() => "192.168.1.1".GetIpAddressAndPortFromEndPoint());
+        Ensure.Throws<LocalizedException>(() => "192.168.1.1".GetIpAddressAndPortFromEndPoint());
     }
 
     [Test]
@@ -41,7 +41,7 @@ public class StringExtensionsTests
     [Test]
     public void GetPortFromEndPoint_MissingPort_ThrowsLocalizedException()
     {
-        Assert.Throws<LocalizedException>(() => "192.168.1.1".GetPortFromEndPoint());
+        Ensure.Throws<LocalizedException>(() => "192.168.1.1".GetPortFromEndPoint());
     }
 
     [Test]
@@ -83,7 +83,7 @@ public class StringExtensionsTests
     [Test]
     public void HexaToInteger_InvalidCharacter_ThrowsFormatExceptionInsteadOfSilentlyCorrupting()
     {
-        Assert.Throws<FormatException>(() => "1G3".HexaToInteger());
+        Ensure.Throws<FormatException>(() => "1G3".HexaToInteger());
     }
 
     [Test]

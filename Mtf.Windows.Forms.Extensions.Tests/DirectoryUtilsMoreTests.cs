@@ -65,6 +65,6 @@ public class DirectoryUtilsMoreTests
     {
         var path = Path.GetTempPath();
 
-        Assert.DoesNotThrow(() => DirectoryUtils.CreateIfNotExists(path));
+        Ensure.DoesNotThrow(() => DirectoryUtils.CreateIfNotExists(path));
     }
 }

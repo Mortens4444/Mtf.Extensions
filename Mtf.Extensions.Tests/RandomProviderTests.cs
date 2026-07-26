@@ -1,4 +1,4 @@
-using Mtf.Extensions.Services;
+﻿using Mtf.Extensions.Services;
 
 namespace Mtf.Extensions.Tests;
 
@@ -10,7 +10,7 @@ public class RandomProviderTests
         for (var i = 0; i < 200; i++)
         {
             int value = 0;
-            Assert.DoesNotThrow(() => value = RandomProvider.GetSecureRandomInt(-10, 10));
+            Ensure.DoesNotThrow(() => value = RandomProvider.GetSecureRandomInt(-10, 10));
             Assert.That(value, Is.InRange(-10, 9));
         }
     }
@@ -18,7 +18,7 @@ public class RandomProviderTests
     [Test]
     public void GetSecureRandomInt64_NegativeRange_DoesNotThrow()
     {
-        Assert.DoesNotThrow(() => RandomProvider.GetSecureRandomInt64(-1000L, 1000L));
+        Ensure.DoesNotThrow(() => RandomProvider.GetSecureRandomInt64(-1000L, 1000L));
     }
 
     [Test]

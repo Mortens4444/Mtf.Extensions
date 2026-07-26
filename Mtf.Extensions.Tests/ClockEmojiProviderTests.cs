@@ -28,6 +28,6 @@ public class ClockEmojiProviderTests
     [Test]
     public void GetCurrentClockEmoji_DoesNotThrow()
     {
-        Assert.DoesNotThrow(() => ClockEmojiProvider.GetCurrentClockEmoji());
+        Ensure.DoesNotThrow(() => ClockEmojiProvider.GetCurrentClockEmoji());
     }
 }

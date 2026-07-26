@@ -48,7 +48,7 @@ public class ListViewExtensionsTests
         using var listView = new ListView();
         listView.Items.Add(new ListViewItem("x"));
 
-        Assert.DoesNotThrow(() => listView.HasElementWithTag("something"));
+        Ensure.DoesNotThrow(() => listView.HasElementWithTag("something"));
         Assert.That(listView.HasElementWithTag("something"), Is.False);
     }
 

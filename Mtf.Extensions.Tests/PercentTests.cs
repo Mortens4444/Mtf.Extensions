@@ -1,4 +1,4 @@
-using Mtf.Extensions.Models;
+﻿using Mtf.Extensions.Models;
 
 namespace Mtf.Extensions.Tests;
 
@@ -7,7 +7,7 @@ public class PercentTests
     [Test]
     public void ImplicitConversion_ValueOutsideByteRange_ThrowsInsteadOfSilentlyWrapping()
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() =>
+        Ensure.Throws<ArgumentOutOfRangeException>(() =>
         {
             Percent p = 300;
         });
@@ -16,7 +16,7 @@ public class PercentTests
     [Test]
     public void ImplicitConversion_ValueOverHundredButWithinByteRange_StillThrows()
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() =>
+        Ensure.Throws<ArgumentOutOfRangeException>(() =>
         {
             Percent p = 150;
         });

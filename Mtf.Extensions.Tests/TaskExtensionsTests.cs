@@ -1,4 +1,4 @@
-namespace Mtf.Extensions.Tests;
+﻿namespace Mtf.Extensions.Tests;
 
 public class TaskExtensionsTests
 {
@@ -19,7 +19,7 @@ public class TaskExtensionsTests
 
             var logged = task.LogExceptions();
 
-            var ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await logged);
+            var ex = Ensure.ThrowsAsync<InvalidOperationException>(async () => await logged);
             Assert.That(ex.Message, Is.EqualTo("boom"));
         }
         finally
@@ -35,7 +35,7 @@ public class TaskExtensionsTests
     {
         var task = Task.Run(() => { });
 
-        Assert.DoesNotThrowAsync(async () => await task.LogExceptions());
+        Ensure.DoesNotThrowAsync(async () => await task.LogExceptions());
         await Task.CompletedTask;
     }
 
@@ -51,7 +51,7 @@ public class TaskExtensionsTests
 
             var logged = task.LogExceptions();
 
-            var ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await logged);
+            var ex = Ensure.ThrowsAsync<InvalidOperationException>(async () => await logged);
             Assert.That(ex.Message, Is.EqualTo("boom"));
         }
         finally

@@ -1,4 +1,4 @@
-using Mtf.Exceptions;
+﻿using Mtf.Exceptions;
 using System.Net;
 using System.Net.Sockets;
 
@@ -105,7 +105,7 @@ public class SocketExtensionsMoreTests
     {
         Socket socket = null;
 
-        Assert.Throws<ArgumentNullException>(() => socket.Connect("127.0.0.1", 12345, 1000, _ => Enumerable.Empty<string>()));
+        Ensure.Throws<ArgumentNullException>(() => socket.Connect("127.0.0.1", 12345, 1000, _ => Enumerable.Empty<string>()));
     }
 
     [Test]
@@ -120,7 +120,7 @@ public class SocketExtensionsMoreTests
         using var server = listener.AcceptSocket();
         listener.Stop();
 
-        Assert.DoesNotThrow(() => client.Connect("127.0.0.1", (ushort)port, 1000, _ => Enumerable.Empty<string>()));
+        Ensure.DoesNotThrow(() => client.Connect("127.0.0.1", (ushort)port, 1000, _ => Enumerable.Empty<string>()));
     }
 
     [Test]
@@ -132,7 +132,7 @@ public class SocketExtensionsMoreTests
 
         using var client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-        Assert.DoesNotThrow(() => client.Connect("127.0.0.1", (ushort)port, 2000, _ => Enumerable.Empty<string>()));
+        Ensure.DoesNotThrow(() => client.Connect("127.0.0.1", (ushort)port, 2000, _ => Enumerable.Empty<string>()));
         Assert.That(client.Connected, Is.True);
 
         listener.Stop();
@@ -149,7 +149,7 @@ public class SocketExtensionsMoreTests
 
         using var client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-        Assert.That(
+        Ensure.That(
             () => client.Connect("127.0.0.1", (ushort)freePort, 2000, _ => Enumerable.Empty<string>()),
             Throws.TypeOf<ConnectionFailedException>().Or.TypeOf<ConnectionTimedOutException>());
     }

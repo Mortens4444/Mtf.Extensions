@@ -21,7 +21,7 @@ public class TableLayoutPanelExtensionsTests
     {
         TableLayoutPanel panel = null;
 
-        Assert.DoesNotThrow(() => panel.SetRowsAndColumns(2, 3));
+        Ensure.DoesNotThrow(() => panel.SetRowsAndColumns(2, 3));
     }
 
     [Test]
@@ -46,7 +46,7 @@ public class TableLayoutPanelExtensionsTests
     {
         TableLayoutPanel panel = null;
 
-        Assert.DoesNotThrow(() => panel.SetEqualRowsAndColumns());
+        Ensure.DoesNotThrow(() => panel.SetEqualRowsAndColumns());
     }
 
     [Test]
@@ -54,7 +54,7 @@ public class TableLayoutPanelExtensionsTests
     {
         using var panel = new TableLayoutPanel { RowCount = 0, ColumnCount = 0 };
 
-        Assert.DoesNotThrow(() => panel.SetEqualRowsAndColumns());
+        Ensure.DoesNotThrow(() => panel.SetEqualRowsAndColumns());
     }
 
     // These two calls use explicit static syntax for the same shadowing reason noted below.
@@ -65,7 +65,7 @@ public class TableLayoutPanelExtensionsTests
         TableLayoutPanel panel = null;
         using var control = new Control();
 
-        Assert.DoesNotThrow(() => TableLayoutPanelExtensions.AddControl(panel, control, new GridPosition()));
+        Ensure.DoesNotThrow(() => TableLayoutPanelExtensions.AddControl(panel, control, new GridPosition()));
     }
 
     [Test]
@@ -74,7 +74,7 @@ public class TableLayoutPanelExtensionsTests
         using var panel = new TableLayoutPanel();
         using var control = new Control();
 
-        Assert.DoesNotThrow(() => TableLayoutPanelExtensions.AddControl(panel, control, null));
+        Ensure.DoesNotThrow(() => TableLayoutPanelExtensions.AddControl(panel, control, null));
     }
 
     [Test]

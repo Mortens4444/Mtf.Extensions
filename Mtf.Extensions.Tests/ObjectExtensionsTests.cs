@@ -1,4 +1,4 @@
-using DescriptionAttribute = System.ComponentModel.DescriptionAttribute;
+﻿using DescriptionAttribute = System.ComponentModel.DescriptionAttribute;
 
 namespace Mtf.Extensions.Tests;
 
@@ -85,7 +85,7 @@ public class ObjectExtensionsTests
     public void GetDescription_NullValue_ThrowsArgumentNullException()
     {
         object value = null;
-        Assert.Throws<ArgumentNullException>(() => value.GetDescription());
+        Ensure.Throws<ArgumentNullException>(() => value.GetDescription());
     }
 
     private enum SampleEnum

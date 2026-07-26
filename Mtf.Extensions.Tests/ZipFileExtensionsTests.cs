@@ -1,4 +1,4 @@
-using System.IO.Compression;
+﻿using System.IO.Compression;
 using System.Xml;
 
 namespace Mtf.Extensions.Tests;
@@ -35,6 +35,6 @@ public class ZipFileExtensionsTests
         const string maliciousXml = "<?xml version=\"1.0\"?><!DOCTYPE root [<!ENTITY foo \"bar\">]><root>&foo;</root>";
         using var archive = CreateReadableArchiveWithXml("data.xml", maliciousXml);
 
-        Assert.Throws<XmlException>(() => archive.GetXmlDocument("data.xml"));
+        Ensure.Throws<XmlException>(() => archive.GetXmlDocument("data.xml"));
     }
 }

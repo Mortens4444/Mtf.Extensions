@@ -1,4 +1,4 @@
-namespace Mtf.Extensions.Tests;
+﻿namespace Mtf.Extensions.Tests;
 
 public class CancellationTokenSourceExtensionsTests
 {
@@ -20,13 +20,13 @@ public class CancellationTokenSourceExtensionsTests
 
         cts.CancelAndDispose();
 
-        Assert.Throws<ObjectDisposedException>(() => _ = cts.Token);
+        Ensure.Throws<ObjectDisposedException>(() => _ = cts.Token);
     }
 
     [Test]
     public void CancelAndDispose_NullSource_DoesNotThrow()
     {
         CancellationTokenSource cts = null;
-        Assert.DoesNotThrow(() => cts.CancelAndDispose());
+        Ensure.DoesNotThrow(() => cts.CancelAndDispose());
     }
 }

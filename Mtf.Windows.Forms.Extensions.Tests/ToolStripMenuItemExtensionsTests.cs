@@ -17,7 +17,7 @@ public class ToolStripMenuItemExtensionsTests
     {
         ToolStripMenuItem menuItem = null;
 
-        Assert.Throws<ArgumentNullException>(() => menuItem.FillWithEnum<TestMenuEnum>());
+        Ensure.Throws<ArgumentNullException>(() => menuItem.FillWithEnum<TestMenuEnum>());
     }
 
     [Test]
@@ -25,7 +25,7 @@ public class ToolStripMenuItemExtensionsTests
     {
         ToolStripMenuItem menuItem = null;
 
-        Assert.Throws<ArgumentNullException>(() => menuItem.FillWithItems(new[] { "a", "b" }));
+        Ensure.Throws<ArgumentNullException>(() => menuItem.FillWithItems(new[] { "a", "b" }));
     }
 
     [Test]
@@ -33,7 +33,7 @@ public class ToolStripMenuItemExtensionsTests
     {
         using var menuItem = new ToolStripMenuItem();
 
-        Assert.Throws<ArgumentNullException>(() => menuItem.FillWithItems<string>(null));
+        Ensure.Throws<ArgumentNullException>(() => menuItem.FillWithItems<string>(null));
     }
 
     [Test]

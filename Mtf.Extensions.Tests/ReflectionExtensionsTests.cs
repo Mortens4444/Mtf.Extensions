@@ -1,4 +1,4 @@
-namespace Mtf.Extensions.Tests;
+﻿namespace Mtf.Extensions.Tests;
 
 public class ReflectionExtensionsTests
 {
@@ -50,7 +50,7 @@ public class ReflectionExtensionsTests
     {
         System.Reflection.Assembly assembly = null;
 
-        Assert.Throws<ArgumentNullException>(() => assembly.CreateInstancesFromNamespace<ISampleService>("anything"));
+        Ensure.Throws<ArgumentNullException>(() => assembly.CreateInstancesFromNamespace<ISampleService>("anything"));
     }
 
     [Test]

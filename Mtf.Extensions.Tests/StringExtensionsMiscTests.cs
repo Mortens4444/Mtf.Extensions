@@ -1,4 +1,4 @@
-using System.Security;
+﻿using System.Security;
 
 namespace Mtf.Extensions.Tests;
 
@@ -8,7 +8,7 @@ public class StringExtensionsMiscTests
     public void GetProgramAndParameters_NullCommand_ThrowsArgumentNullException()
     {
         string command = null;
-        Assert.Throws<ArgumentNullException>(() => command.GetProgramAndParameters());
+        Ensure.Throws<ArgumentNullException>(() => command.GetProgramAndParameters());
     }
 
     [Test]
@@ -30,7 +30,7 @@ public class StringExtensionsMiscTests
     [Test]
     public void GetProgramAndParameters_UnclosedQuote_ThrowsInvalidOperationException()
     {
-        Assert.Throws<InvalidOperationException>(() => "\"unterminated".GetProgramAndParameters());
+        Ensure.Throws<InvalidOperationException>(() => "\"unterminated".GetProgramAndParameters());
     }
 
     [Test]
@@ -267,7 +267,7 @@ public class StringExtensionsMiscTests
     [Test]
     public void GetVideoSourceInfo_MalformedInput_ThrowsLocalizedException()
     {
-        Assert.Throws<Mtf.Extensions.Exceptions.LocalizedException>(() => "no-pipe-here".GetVideoSourceInfo());
+        Ensure.Throws<Mtf.Extensions.Exceptions.LocalizedException>(() => "no-pipe-here".GetVideoSourceInfo());
     }
 
     [Test]
@@ -306,6 +306,6 @@ public class StringExtensionsMiscTests
     public void Substring_NullOrEmptyValue_ThrowsArgumentException()
     {
         string value = null;
-        Assert.Throws<ArgumentException>(() => value.Substring("a", "b"));
+        Ensure.Throws<ArgumentException>(() => value.Substring("a", "b"));
     }
 }

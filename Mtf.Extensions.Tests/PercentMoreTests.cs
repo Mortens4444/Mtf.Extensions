@@ -1,4 +1,4 @@
-using Mtf.Extensions.Models;
+﻿using Mtf.Extensions.Models;
 
 namespace Mtf.Extensions.Tests;
 
@@ -7,7 +7,7 @@ public class PercentMoreTests
     [Test]
     public void Constructor_ValueOver100_ThrowsByDefault()
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => new Percent(150));
+        Ensure.Throws<ArgumentOutOfRangeException>(() => new Percent(150));
     }
 
     [Test]

@@ -1,4 +1,4 @@
-namespace Mtf.Extensions.Tests;
+﻿namespace Mtf.Extensions.Tests;
 
 public class ExceptionExtensionsTests
 {
@@ -17,7 +17,7 @@ public class ExceptionExtensionsTests
     {
         Exception ex = null;
 
-        Assert.Throws<ArgumentNullException>(() => ex.GetDetails());
+        Ensure.Throws<ArgumentNullException>(() => ex.GetDetails());
     }
 
     [Test]

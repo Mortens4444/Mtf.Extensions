@@ -1,4 +1,4 @@
-namespace Mtf.Extensions.Tests;
+﻿namespace Mtf.Extensions.Tests;
 
 public class StringExtensionsQueryTests
 {
@@ -6,13 +6,13 @@ public class StringExtensionsQueryTests
     public void NumberOfOccurrences_NullSource_ThrowsArgumentNullException()
     {
         string source = null;
-        Assert.Throws<ArgumentNullException>(() => source.NumberOfOccurrences("a"));
+        Ensure.Throws<ArgumentNullException>(() => source.NumberOfOccurrences("a"));
     }
 
     [Test]
     public void NumberOfOccurrences_NullWord_ThrowsArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => "abc".NumberOfOccurrences(null));
+        Ensure.Throws<ArgumentNullException>(() => "abc".NumberOfOccurrences(null));
     }
 
     [Test]
@@ -37,7 +37,7 @@ public class StringExtensionsQueryTests
     public void ChangeExpanderText_NullText_ThrowsArgumentNullException()
     {
         string text = null;
-        Assert.Throws<ArgumentNullException>(() => text.ChangeExpanderText());
+        Ensure.Throws<ArgumentNullException>(() => text.ChangeExpanderText());
     }
 
     [Test]
@@ -62,8 +62,8 @@ public class StringExtensionsQueryTests
     public void FirstChar_NullOrEmpty_ThrowsArgumentException()
     {
         string value = null;
-        Assert.Throws<ArgumentException>(() => value.FirstChar());
-        Assert.Throws<ArgumentException>(() => string.Empty.FirstChar());
+        Ensure.Throws<ArgumentException>(() => value.FirstChar());
+        Ensure.Throws<ArgumentException>(() => string.Empty.FirstChar());
     }
 
     [Test]
@@ -76,8 +76,8 @@ public class StringExtensionsQueryTests
     public void LastChar_NullOrEmpty_ThrowsArgumentException()
     {
         string value = null;
-        Assert.Throws<ArgumentException>(() => value.LastChar());
-        Assert.Throws<ArgumentException>(() => string.Empty.LastChar());
+        Ensure.Throws<ArgumentException>(() => value.LastChar());
+        Ensure.Throws<ArgumentException>(() => string.Empty.LastChar());
     }
 
     [Test]
@@ -248,8 +248,8 @@ public class StringExtensionsQueryTests
     public void IsLessThan_NullArguments_ThrowArgumentNullException()
     {
         string a = null;
-        Assert.Throws<ArgumentNullException>(() => a.IsLessThan("b"));
-        Assert.Throws<ArgumentNullException>(() => "a".IsLessThan(null));
+        Ensure.Throws<ArgumentNullException>(() => a.IsLessThan("b"));
+        Ensure.Throws<ArgumentNullException>(() => "a".IsLessThan(null));
     }
 
     [Test]

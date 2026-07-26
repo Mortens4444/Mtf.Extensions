@@ -1,4 +1,4 @@
-using System.Net;
+﻿using System.Net;
 using System.Net.Sockets;
 
 namespace Mtf.Extensions.Tests;
@@ -21,14 +21,14 @@ public class SocketExtensionsTests
 
         client.CloseSocket();
 
-        Assert.Throws<ObjectDisposedException>(() => _ = client.Available);
+        Ensure.Throws<ObjectDisposedException>(() => _ = client.Available);
     }
 
     [Test]
     public void CloseSocket_NullSocket_DoesNotThrow()
     {
         Socket socket = null;
-        Assert.DoesNotThrow(() => socket.CloseSocket());
+        Ensure.DoesNotThrow(() => socket.CloseSocket());
     }
 
     [Test]
@@ -36,7 +36,7 @@ public class SocketExtensionsTests
     {
         var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-        Assert.DoesNotThrow(() => socket.CloseSocket());
-        Assert.Throws<ObjectDisposedException>(() => _ = socket.Available);
+        Ensure.DoesNotThrow(() => socket.CloseSocket());
+        Ensure.Throws<ObjectDisposedException>(() => _ = socket.Available);
     }
 }

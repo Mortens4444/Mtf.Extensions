@@ -12,7 +12,7 @@ public class FormExtensionsMoreTests
     {
         Form form = null;
 
-        Assert.Throws<ArgumentNullException>(() => form.SetFormSizeAndPosition(new Rectangle(1, 2, 300, 200)));
+        Ensure.Throws<ArgumentNullException>(() => form.SetFormSizeAndPosition(new Rectangle(1, 2, 300, 200)));
     }
 
     [Test]

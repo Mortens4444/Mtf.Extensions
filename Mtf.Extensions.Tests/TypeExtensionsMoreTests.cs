@@ -1,4 +1,4 @@
-namespace Mtf.Extensions.Tests;
+﻿namespace Mtf.Extensions.Tests;
 
 public class TypeExtensionsMoreTests
 {
@@ -52,7 +52,7 @@ public class TypeExtensionsMoreTests
     {
         Type type = null;
 
-        Assert.Throws<ArgumentNullException>(() => type.GetTypesInNamespace("anything"));
+        Ensure.Throws<ArgumentNullException>(() => type.GetTypesInNamespace("anything"));
     }
 
     [Test]
@@ -74,7 +74,7 @@ public class TypeExtensionsMoreTests
     [Test]
     public void GetTypeByName_UnknownType_Throws()
     {
-        Assert.Throws<InvalidOperationException>(() => Mtf.Extensions.TypeExtensions.GetTypeByName("No.Such.Type.Exists.Anywhere"));
+        Ensure.Throws<InvalidOperationException>(() => Mtf.Extensions.TypeExtensions.GetTypeByName("No.Such.Type.Exists.Anywhere"));
     }
 
     [TestCase(typeof(int), true)]

@@ -1,4 +1,4 @@
-namespace Mtf.Extensions.Tests;
+﻿namespace Mtf.Extensions.Tests;
 
 public class StringExtensionsConversionsTests
 {
@@ -50,7 +50,7 @@ public class StringExtensionsConversionsTests
     [Test]
     public void HexaStringToASCII_OddLength_ThrowsArgumentException()
     {
-        Assert.Throws<ArgumentException>(() => "ABC".HexaStringToASCII());
+        Ensure.Throws<ArgumentException>(() => "ABC".HexaStringToASCII());
     }
 
     [Test]

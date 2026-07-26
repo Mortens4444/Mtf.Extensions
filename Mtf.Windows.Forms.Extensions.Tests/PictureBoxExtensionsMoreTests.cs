@@ -14,7 +14,7 @@ public class PictureBoxExtensionsMoreTests
         using var pictureBox = new PictureBox();
         var executed = false;
 
-        Assert.DoesNotThrow(() => pictureBox.InvokeAction(() => executed = true));
+        Ensure.DoesNotThrow(() => pictureBox.InvokeAction(() => executed = true));
         Assert.That(executed, Is.False);
     }
 
@@ -35,7 +35,7 @@ public class PictureBoxExtensionsMoreTests
     {
         PictureBox pictureBox = null;
 
-        Assert.DoesNotThrow(() => pictureBox.InvokeAction(() => { }));
+        Ensure.DoesNotThrow(() => pictureBox.InvokeAction(() => { }));
     }
 
     [Test]
@@ -57,7 +57,7 @@ public class PictureBoxExtensionsMoreTests
         using var pictureBox = new PictureBox();
         var sync = new object();
 
-        Assert.DoesNotThrow(() => pictureBox.ThreadSafeSetImageWithCloning(null, sync));
+        Ensure.DoesNotThrow(() => pictureBox.ThreadSafeSetImageWithCloning(null, sync));
     }
 
     [Test]
@@ -100,7 +100,7 @@ public class PictureBoxExtensionsMoreTests
     {
         PictureBox pictureBox = null;
 
-        Assert.Throws<ArgumentNullException>(() => pictureBox.LoadImage("anything.png"));
+        Ensure.Throws<ArgumentNullException>(() => pictureBox.LoadImage("anything.png"));
     }
 
     [Test]
@@ -108,7 +108,7 @@ public class PictureBoxExtensionsMoreTests
     {
         using var pictureBox = new PictureBox();
 
-        Assert.DoesNotThrow(() => pictureBox.LoadImage(@"C:\no\such\file.png"));
+        Ensure.DoesNotThrow(() => pictureBox.LoadImage(@"C:\no\such\file.png"));
         Assert.That(pictureBox.Image, Is.Null);
     }
 

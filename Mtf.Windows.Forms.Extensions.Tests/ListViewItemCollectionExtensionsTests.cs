@@ -12,7 +12,7 @@ public class ListViewItemCollectionExtensionsTests
     {
         ListView.ListViewItemCollection collection = null;
 
-        Assert.DoesNotThrow(() => collection.ExportContent(Path.GetTempFileName()));
+        Ensure.DoesNotThrow(() => collection.ExportContent(Path.GetTempFileName()));
     }
 
     [Test]

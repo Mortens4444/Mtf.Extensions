@@ -1,4 +1,4 @@
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Drawing2D;
 
 namespace Mtf.Extensions.Tests;
@@ -42,6 +42,6 @@ public class BrushExtensionsTests
     {
         using var brush = new TextureBrush(new Bitmap(1, 1));
 
-        Assert.Throws<InvalidOperationException>(() => ((Brush)brush).ToColor());
+        Ensure.Throws<InvalidOperationException>(() => ((Brush)brush).ToColor());
     }
 }
