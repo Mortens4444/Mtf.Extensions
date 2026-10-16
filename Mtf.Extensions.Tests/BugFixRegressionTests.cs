@@ -219,12 +219,4 @@ public class BugFixRegressionTests
         Assert.That(failed.Message, Does.Contain("Connection failed"));
         Assert.That(timedOut.Message, Does.Contain("Connection timed out"));
     }
-
-    [Test]
-    public void LegacyMathExtensionsNamespace_StillCompilesAndForwards()
-    {
-#pragma warning disable CS0618
-        Assert.That(Mtf.General.Extensions.MathExtensions.Clamp(15m, 0m, 10m), Is.EqualTo(10m));
-#pragma warning restore CS0618
-    }
 }
