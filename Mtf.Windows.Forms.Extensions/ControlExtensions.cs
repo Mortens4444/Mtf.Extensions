@@ -2,6 +2,7 @@
 using Mtf.Extensions.Interfaces;
 using System;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -9,6 +10,8 @@ namespace Mtf.Windows.Forms.Extensions
 {
     public static class ControlExtensions
     {
+        private static readonly ConditionalWeakTable<Control, Font> osdFonts = new ConditionalWeakTable<Control, Font>();
+
         public static void AddControl(this Control container, Control control, IGridPosition gridPosition)
         {
             if (container == null)
@@ -78,13 +81,24 @@ namespace Mtf.Windows.Forms.Extensions
                 return;
             }
 
-            if (control.InvokeRequired)
+            try
             {
-                control.Invoke(action);
+                if (control.InvokeRequired)
+                {
+                    control.Invoke(action);
+                }
+                else
+                {
+                    action();
+                }
             }
-            else
+            catch (ObjectDisposedException)
             {
-                action();
+                // The control was disposed between the check above and the invoke.
+            }
+            catch (InvalidOperationException) when (control.IsDisposed || !control.IsHandleCreated)
+            {
+                // The handle was destroyed while the invoke was pending.
             }
         }
 
@@ -145,18 +159,17 @@ namespace Mtf.Windows.Forms.Extensions
                 return;
             }
 
-            var oldFont = control.Font;
-            control.Font = new Font(familyName, emSize, fontStyle);
+            var newFont = new Font(familyName, emSize, fontStyle);
+            control.Font = newFont;
 
-            // Only dispose fonts we previously created ourselves here; the ambient/parent
-            // default font is shared and disposing it would break other controls using it.
-            if (oldFont != null
-                && !ReferenceEquals(oldFont, Control.DefaultFont)
-                && !ReferenceEquals(oldFont, SystemFonts.DefaultFont)
-                && (control.Parent == null || !ReferenceEquals(oldFont, control.Parent.Font)))
+            // Only dispose fonts this method created earlier for the same control. Any other font
+            // (designer-assigned, ambient, parent) may be shared, so disposing it is never safe here.
+            if (osdFonts.TryGetValue(control, out var previousOsdFont))
             {
-                oldFont.Dispose();
+                osdFonts.Remove(control);
+                previousOsdFont.Dispose();
             }
+            osdFonts.Add(control, newFont);
 
             control.ForeColor = foreColor;
             control.Text = text;

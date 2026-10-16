@@ -1,7 +1,6 @@
 ﻿using Mtf.Extensions.Exceptions;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
 using static Mtf.Extensions.Delegates;
@@ -29,42 +28,54 @@ namespace Mtf.Extensions
 
         public static Tuple<string, ushort> GetIpAddressAndPort(this EndPoint endpoint)
         {
+            if (endpoint is IPEndPoint ipEndPoint)
+            {
+                return new Tuple<string, ushort>(ipEndPoint.Address.ToString(), (ushort)ipEndPoint.Port);
+            }
+
             var endpointText = endpoint?.ToString();
             if (String.IsNullOrEmpty(endpointText))
             {
                 return new Tuple<string, ushort>(String.Empty, 0);
             }
 
-            var ipAndPort = endpointText.Split(':');
-            if (ipAndPort.Length < 2 || !UInt16.TryParse(ipAndPort[1], NumberStyles.Integer, CultureInfo.InvariantCulture, out var port))
+            if (!endpointText.TryGetIpAddressAndPortFromEndPoint(out var ipAddress, out var port))
             {
                 throw new LocalizedException("Port value cannot be parsed from value: {0}.", endpointText);
             }
-            return new Tuple<string, ushort>(ipAndPort[0], port);
+            return new Tuple<string, ushort>(ipAddress, port);
         }
 
         public static string GetIpAddress(this EndPoint endpoint)
         {
+            if (endpoint is IPEndPoint ipEndPoint)
+            {
+                return ipEndPoint.Address.ToString();
+            }
+
             var endpointText = endpoint?.ToString();
             if (String.IsNullOrEmpty(endpointText))
             {
                 return String.Empty;
             }
 
-            var ipAndPort = endpointText.Split(':');
-            return ipAndPort[0];
+            return endpointText.GetIpAddressFromEndPoint();
         }
 
         public static ushort GetPort(this EndPoint endpoint)
         {
+            if (endpoint is IPEndPoint ipEndPoint)
+            {
+                return (ushort)ipEndPoint.Port;
+            }
+
             var endpointText = endpoint?.ToString();
             if (String.IsNullOrEmpty(endpointText))
             {
                 return 0;
             }
 
-            var ipAndPort = endpointText.Split(':');
-            if (ipAndPort.Length < 2 || !UInt16.TryParse(ipAndPort[1], NumberStyles.Integer, CultureInfo.InvariantCulture, out var port))
+            if (!endpointText.TryGetIpAddressAndPortFromEndPoint(out _, out var port))
             {
                 throw new LocalizedException("Port value cannot be parsed from value: {0}.", endpointText);
             }

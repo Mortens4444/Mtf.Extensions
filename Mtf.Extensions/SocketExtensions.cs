@@ -48,13 +48,23 @@ namespace Mtf.Extensions
             if (!result.AsyncWaitHandle.WaitOne(timeoutMs))
             {
                 socket.Close();
-                throw new ConnectionFailedException(serverIp, serverPort, ipAddress);
+                throw new ConnectionTimedOutException(serverIp, serverPort, ipAddress);
+            }
+
+            try
+            {
+                socket.EndConnect(result);
+            }
+            catch (SocketException ex)
+            {
+                socket.Close();
+                throw new ConnectionFailedException(serverIp, serverPort, ipAddress, ex);
             }
 
             if (!IsSocketConnected(socket))
             {
                 socket.Close();
-                throw new ConnectionTimedOutException(serverIp, serverPort, ipAddress);
+                throw new ConnectionFailedException(serverIp, serverPort, ipAddress);
             }
         }
 

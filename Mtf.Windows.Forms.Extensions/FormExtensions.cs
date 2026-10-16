@@ -19,31 +19,9 @@ namespace Mtf.Windows.Forms.Extensions
 
         public static bool IsDisposingOrDisposed(this Form form)
         {
-            if (form == null || form.IsDisposed)
-            {
-                return true;
-            }
-
-            if (!form.IsHandleCreated)
-            {
-                return form.Disposing;
-            }
-
-            try
-            {
-                return (bool)form.Invoke(new Func<bool>(() =>
-                {
-                    return form.Disposing || form.IsDisposed;
-                }));
-            }
-            catch (ObjectDisposedException)
-            {
-                return true;
-            }
-            catch (InvalidOperationException)
-            {
-                return form.Disposing || form.IsDisposed;
-            }
+            // Disposing and IsDisposed are plain field reads that are safe from any thread,
+            // so no Invoke is needed (and none of its thread-state exceptions can escape).
+            return form == null || form.Disposing || form.IsDisposed;
         }
     }
 }

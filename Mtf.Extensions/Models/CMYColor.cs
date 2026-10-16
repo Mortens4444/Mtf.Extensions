@@ -36,7 +36,7 @@ namespace Mtf.Extensions.Models
             this.Y = (int)Math.Round(Y);
 
             A = 255;
-            Color = CmyToRgb(this.C, this.M, this.Y);
+            Color = CmyToRgb(this.C / 255.0, this.M / 255.0, this.Y / 255.0);
             R = Color.R;
             G = Color.G;
             B = Color.B;
@@ -60,11 +60,14 @@ namespace Mtf.Extensions.Models
             return new Tuple<double, double, double>(c, m, y);
         }
 
+        /// <summary>
+        /// Converts CMY components given on a 0..1 scale (as returned by <see cref="RgbToCmy"/>) to an RGB color.
+        /// </summary>
         public static Color CmyToRgb(double c, double m, double y)
         {
-            var r = (int)Math.Round((1 - (c / 255.0)) * 255);
-            var g = (int)Math.Round((1 - (m / 255.0)) * 255);
-            var b = (int)Math.Round((1 - (y / 255.0)) * 255);
+            var r = (int)Math.Round((1 - c) * 255);
+            var g = (int)Math.Round((1 - m) * 255);
+            var b = (int)Math.Round((1 - y) * 255);
 
             return Color.FromArgb(
                 Math.Max(0, Math.Min(255, r)),

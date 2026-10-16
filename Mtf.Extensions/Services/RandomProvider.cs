@@ -22,7 +22,7 @@ namespace Mtf.Extensions.Services
             ulong result;
             do
             {
-                result = GetRandomUInt64(typeof(T));
+                result = GetSecureRandomUInt64();
             }
             while (result >= limit);
 
@@ -69,52 +69,6 @@ namespace Mtf.Extensions.Services
                 rng.GetBytes(bytes);
             }
             return bytes;
-        }
-
-        private static ulong GetRandomUInt64(Type type)
-        {
-            int size;
-            switch (type.Name)
-            {
-                case "Byte":
-                case "SByte":
-                    size = 1;
-                    break;
-                case "Int16":
-                case "UInt16":
-                    size = 2;
-                    break;
-                case "Int32":
-                case "UInt32":
-                    size = 4;
-                    break;
-                case "Int64":
-                case "UInt64":
-                    size = 8;
-                    break;
-                default:
-                    throw new NotSupportedException("Unsupported type provided.");
-            }
-
-            var bytes = new byte[size];
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(bytes);
-            }
-
-            switch (size)
-            {
-                case 1:
-                    return bytes[0];
-                case 2:
-                    return BitConverter.ToUInt16(bytes, 0);
-                case 4:
-                    return BitConverter.ToUInt32(bytes, 0);
-                case 8:
-                    return BitConverter.ToUInt64(bytes, 0);
-                default:
-                    return 0;
-            }
         }
     }
 }

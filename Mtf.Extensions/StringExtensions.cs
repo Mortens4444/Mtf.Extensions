@@ -1003,7 +1003,7 @@ namespace Mtf.Extensions
                 {
                     throw new FormatException($"'{value[i]}' is not a valid hexadecimal digit.");
                 }
-                result = (result * 16) + digit;
+                result = checked((result * 16) + digit);
             }
 
             return result;
@@ -1207,7 +1207,31 @@ namespace Mtf.Extensions
             {
                 return String.Empty;
             }
-            return text.Split(':')[0];
+            var separatorIndex = text.LastIndexOfAny(ipAndPortSeparators);
+            return separatorIndex < 0 ? text : text.Substring(0, separatorIndex);
+        }
+
+        /// <summary>
+        /// Splits an "address:port" (or "address port") text at its last separator, so bracketed
+        /// IPv6 endpoints such as "[::1]:8080" are handled as well.
+        /// </summary>
+        public static bool TryGetIpAddressAndPortFromEndPoint(this string text, out string ipAddress, out ushort port)
+        {
+            ipAddress = text ?? String.Empty;
+            port = 0;
+            if (String.IsNullOrWhiteSpace(text))
+            {
+                return false;
+            }
+
+            var separatorIndex = text.LastIndexOfAny(ipAndPortSeparators);
+            if (separatorIndex < 0)
+            {
+                return false;
+            }
+
+            ipAddress = text.Substring(0, separatorIndex);
+            return UInt16.TryParse(text.Substring(separatorIndex + 1), NumberStyles.Integer, CultureInfo.InvariantCulture, out port);
         }
 
         public static Tuple<string, ushort> GetIpAddressAndPortFromEndPoint(this string text)
@@ -1216,10 +1240,9 @@ namespace Mtf.Extensions
             {
                 return new Tuple<string, ushort>(String.Empty, 0);
             }
-            var parts = text.Split(ipAndPortSeparators);
-            if (parts.Length >= 2 && UInt16.TryParse(parts[1], out var port))
+            if (text.TryGetIpAddressAndPortFromEndPoint(out var ipAddress, out var port))
             {
-                return new Tuple<string, ushort>(parts[0], port);
+                return new Tuple<string, ushort>(ipAddress, port);
             }
             throw new LocalizedException("Port value cannot be parsed from value: {0}.", text);
         }
@@ -1230,8 +1253,7 @@ namespace Mtf.Extensions
             {
                 return 0;
             }
-            var parts = text.Split(ipAndPortSeparators);
-            if (parts.Length >= 2 && UInt16.TryParse(parts[1], out var port))
+            if (text.TryGetIpAddressAndPortFromEndPoint(out _, out var port))
             {
                 return port;
             }

@@ -117,7 +117,7 @@ namespace Mtf.Extensions
 
         public static Color ConvertToBT601Grayscale(this Color value)
         {
-            var grayValue = (int)Math.Round(value.GetBT601Value()); // NTSC, PAL
+            var grayValue = GetComponentValue(value.GetBT601Value()); // NTSC, PAL
             return Color.FromArgb(grayValue, grayValue, grayValue);
         }
 
@@ -135,7 +135,7 @@ namespace Mtf.Extensions
 
         public static Color ConvertToBT709Grayscale(this Color value)
         {
-            int grayValue = (byte)Math.Round(value.GetBT709Value());
+            var grayValue = GetComponentValue(value.GetBT709Value());
             return Color.FromArgb(grayValue, grayValue, grayValue);
         }
 
@@ -346,47 +346,34 @@ namespace Mtf.Extensions
 
         public static Color ColorFromHSV(double hue, double saturation, double value)
         {
-            Color c;
+            hue = ((hue % 360) + 360) % 360;
+            saturation = Math.Max(0, Math.Min(1, saturation));
+            value = Math.Max(0, Math.Min(1, value));
+
             var h = hue / 60;
-            var croma = value * saturation;
+            var sector = (int)Math.Floor(h) % 6;
+            var f = h - Math.Floor(h);
 
-            var x = croma * (1 - Math.Abs((h % 2) - 1));
+            var v = Convert.ToInt32(value * 255);
+            var p = Convert.ToInt32(value * (1 - saturation) * 255);
+            var q = Convert.ToInt32(value * (1 - (f * saturation)) * 255);
+            var t = Convert.ToInt32(value * (1 - ((1 - f) * saturation)) * 255);
 
-            var hi = Convert.ToInt32(Math.Round(h)) % 6;
-            var f = h - Math.Round(h);
-
-            var m = value * (1 - saturation);
-
-            value *= 255;
-            var v = Convert.ToInt32(value);
-            var p = Convert.ToInt32(m * 255);
-            var q = Convert.ToInt32(value * (1 - (f * saturation)));
-            var t = Convert.ToInt32(value * (1 - ((1 - f) * saturation)));
-
-            switch (hi)
+            switch (sector)
             {
                 case 0:
-                    c = Color.FromArgb(255, Convert.ToInt32(croma * 255), Convert.ToInt32(x * 255), 0);
-                    //c = Color.FromArgb(255, v, t, p);
-                    break;
+                    return Color.FromArgb(255, v, t, p);
                 case 1:
-                    c = Color.FromArgb(255, q, v, p);
-                    break;
+                    return Color.FromArgb(255, q, v, p);
                 case 2:
-                    c = Color.FromArgb(255, p, v, t);
-                    break;
+                    return Color.FromArgb(255, p, v, t);
                 case 3:
-                    c = Color.FromArgb(255, p, q, v);
-                    break;
+                    return Color.FromArgb(255, p, q, v);
                 case 4:
-                    c = Color.FromArgb(255, t, p, v);
-                    break;
+                    return Color.FromArgb(255, t, p, v);
                 default:
-                    c = Color.FromArgb(255, v, p, q);
-                    break;
+                    return Color.FromArgb(255, v, p, q);
             }
-
-            return c;
         }
 
         public static Color TransformColor(this Color value, ColorTransformMethod method)

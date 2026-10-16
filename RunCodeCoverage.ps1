@@ -7,6 +7,17 @@ $repoRoot = $PSScriptRoot
 $resultsDir = Join-Path $repoRoot "CoverageResults"
 $reportDir = Join-Path $resultsDir "Report"
 
+# Resolve the dotnet-tools.json manifest from the repo root regardless of the caller's cwd.
+Push-Location $repoRoot
+try {
+
+Write-Host "Restoring local dotnet tools..." -ForegroundColor Cyan
+dotnet tool restore
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "dotnet tool restore failed." -ForegroundColor Red
+    exit $LASTEXITCODE
+}
+
 if (Test-Path $resultsDir) {
     Remove-Item $resultsDir -Recurse -Force
 }
@@ -58,4 +69,9 @@ Write-Host "Coverage report: $indexFile" -ForegroundColor Green
 
 if (-not $NoBrowser) {
     Start-Process $indexFile
+}
+
+}
+finally {
+    Pop-Location
 }

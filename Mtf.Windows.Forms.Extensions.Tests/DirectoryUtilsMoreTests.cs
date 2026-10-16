@@ -17,6 +17,8 @@ public class DirectoryUtilsMoreTests
             PathProvider.VideoClips
         };
 
+        var preExisting = expectedDirs.Where(Directory.Exists).ToHashSet();
+
         try
         {
             DirectoryUtils.CreateApplicationDirectories();
@@ -28,12 +30,10 @@ public class DirectoryUtilsMoreTests
         }
         finally
         {
-            foreach (var dir in expectedDirs)
+            // Only remove directories this test created; anything that existed before belongs to someone else.
+            foreach (var dir in expectedDirs.Where(d => !preExisting.Contains(d) && Directory.Exists(d)))
             {
-                if (Directory.Exists(dir))
-                {
-                    Directory.Delete(dir);
-                }
+                Directory.Delete(dir, recursive: true);
             }
         }
     }
